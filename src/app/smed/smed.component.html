@@ -1,0 +1,63 @@
+<div class="contenido" class="mat-typography">
+    
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_changes"></mat-icon>
+        <span class="titulo">{{ this.servicio.rTraduccion()[473] }}</span>
+    </div>
+    <div class="registroGeneral">
+                        
+        <div class="registroCampo">     
+            <div class="registroTitulo">{{ this.servicio.rTraduccion()[474] }}</div>    
+            <div class="registroValor">
+                <mat-form-field class="cajaTexto_2">
+                    <mat-select #lstC0 multiple [(value)]="seleccionMensaje" name="seleccionMensaje" (selectionChange)=cambiando($event)>
+                        <mat-option *ngFor="let pager of pagers; let i = index" [value]="i">{{ pager.nombre }}</mat-option>
+                    </mat-select>
+                    <mat-hint [ngClass]="{ pista: !error01, pistaError: error01 }" align="start">{{ seleccionMensaje.length == 0 ? this.servicio.rTraduccion()[477] : (seleccionMensaje.length + this.servicio.rTraduccion()[478]) }}</mat-hint>
+                </mat-form-field>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[475] }}</span>           
+            </div>    
+        </div>
+
+        <div class="registroCampo">
+            <div class="registroTitulo">{{ this.servicio.rTraduccion()[476] }}</div>    
+            <mat-form-field class="cajaTexto_2">
+                <mat-select #lstC0 [(ngModel)]="maquina" name="maquina" (selectionChange)="cambiando($event);llenarPartes()">
+                    <mat-option *ngFor="let maquina of maquinas; let i = index" [value]="i">{{ maquina.nombre }}</mat-option>
+                </mat-select>
+                <mat-hint [ngClass]="{ pista: !error02, pistaError: error02 }" align="start">{{ this.servicio.rTraduccion()[180] }}</mat-hint>
+            </mat-form-field>                            
+        </div>
+
+        <div class="registroCampo">
+            <div class="registroTitulo">{{ this.servicio.rTraduccion()[324] }}</div>   
+            
+            <mat-form-field class="cajaTexto_2">
+                <mat-select #lstC0 multiple [(value)]="seleccionParte" name="seleccionParte" (selectionChange)=cambiando($event)>
+                    <mat-option *ngFor="let parte of partes; let i = index" [value]="i">{{ parte.nombre }}</mat-option>
+                </mat-select>
+                <mat-hint [ngClass]="{ pista: !error03, pistaError: error03 }" align="start">{{ seleccionParte.length == 0 ? this.servicio.rTraduccion()[479] : (seleccionParte.length + this.servicio.rTraduccion()[480]) }}</mat-hint>
+            </mat-form-field>                            
+        </div>
+    </div>
+
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ this.servicio.rTraduccion()[481] }}</div>    
+        <div class="registroValorDetalleST">{{ mensajeSMED }}</div>    
+    </div>
+
+
+    
+    <div class="pie" mat-dialog-actions>
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)" [disabled]="faltaMensaje"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon class="iconPB" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[138] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[177] }}</span>
+        </button>
+    </div>
+</div>
+    

@@ -1,0 +1,404 @@
+<div id="todo" class="mat-typography">
+    <div class="pantallaError"    *ngIf="pantalla==1">
+        <div class="cabeceraMensaje"  >{{ errorTitulo }}</div>
+        <div class="mensaje" [innerHTML]="errorMensaje"></div>
+    </div>
+    <div class="catalogos" *ngIf="pantalla==2">
+        <div class="cabecera" >
+            <div class="izquierda">
+                <span class="ayudaCampoTitulo" *ngIf="procesoSeleccionado.id==0">{{ this.servicio.rTraduccion()[2806] }}</span>
+                <button class="boton regreso9" mat-button (mouseover)="bot1Sel=true;" (mouseout)="bot1Sel=false;" [ngClass]="{botHover: bot1Sel}" (click)="solicitarIdentificacion()" *ngIf="procesoSeleccionado.id!=0">
+                    <mat-icon class="iconPB_2" svgIcon="i_procesos" ></mat-icon>
+                    <div class="texto">{{ this.servicio.rTraduccion()[2804] }}</div>
+                </button>
+                <button class="boton regreso9" mat-button (mouseover)="bot4Sel=true;" (mouseout)="bot4Sel=false;" [ngClass]="{botHover: bot4Sel}" (click)="resumen()" *ngIf="verRegistro == 3">
+                    <mat-icon class="iconPB_2" svgIcon="i_lineas" ></mat-icon>
+                    <div class="texto">{{ this.servicio.rTraduccion()[2805] }}</div>
+                </button>
+            </div>
+            <div class="derecha">
+                <button class="boton regreso9" mat-button (mouseover)="bot3Sel=true;" (mouseout)="bot3Sel=false;" [ngClass]="{botHover: bot3Sel}" (click)="descargar()" *ngIf="vista==99">
+                    <mat-icon class="iconPB_2" svgIcon="i_descargar" ></mat-icon>
+                    <div class="texto">{{ this.servicio.rTraduccion()[2260] }}</div>
+                </button>
+                <button class="boton regreso9" mat-button (mouseover)="bot2Sel=true;" (mouseout)="bot2Sel=false;" [ngClass]="{botHover: bot2Sel}" (click)="refrescar()">
+                    <mat-icon class="iconPB_2" svgIcon="i_refrescar" ></mat-icon>
+                    <div class="texto">{{ this.servicio.rTraduccion()[272] }}</div>
+                </button>
+                <div class="buscadorCaja" *ngIf="verBuscar">
+                    <mat-form-field class="buscador" floatLabel="never">
+                        <input #txtBuscar matInput [placeholder]="etiBuscar" type="text" [(ngModel)]="textoBuscar" (keydown.enter)="filtrar()" (keydown.escape)="escapar()" >
+                        <button mat-button *ngIf="textoBuscar" matSuffix mat-iscon-button aria-label="Clear" (click)="textoBuscar = '';cambiando();">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+      
+        <div class="contenedorScroll"  cdkScrollable [style.overflowY]="verBarra">
+            <div class="detalle" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verRegistro == 1">
+                <button class="tarjeta registro_2" mat-button (click)="detalleProceso(90)" [ngClass]="{ tarAlarmada: procesoSeleccionado.lotesPorAlarmar + procesoSeleccionado.lotesAlarmados > 0 }">
+
+                    <div class="doble_titulo">
+                        <div class="textoTar"> {{ procesoSeleccionado.nombre }}</div>
+                        <div class="derecha_2" *ngIf="grActual==1"><div class="escalamiento">0</div></div>
+                    </div>
+                    
+                    <div class="dobleCaja" [style.marginTop.px]="8">
+                        <div class="p11">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotes }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2289] }}</div>
+                        </div>
+                        <div class="p12" >
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesPorAlarmar }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2797] }}</div>
+                        </div>
+                        <div class="p13" [ngClass]="{ pctBajo: procesoSeleccionado.lotesAlarmados > 0 }">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesAlarmados }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2800] }}</div>
+                        </div>
+                        <div class="p14">
+                            <div class="valorCentro">{{ procesoSeleccionado.items }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2796] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="imagen" *ngIf="procesoSeleccionado.mostrarImagen == 'S'"><img class="imaReg" [src]="procesoSeleccionado.imagen" (error)="imagenErrorProceso(i)" [style.marginTop.px]="8"></div>
+                    <mat-icon class="iconGrande" *ngIf="procesoSeleccionado.mostrarImagen == 'N' || !verImagen" [svgIcon]="iconoGeneral"></mat-icon>
+                    
+                    <div class="dobleCaja" [style.marginTop.px]="8">
+                        <div class="p21">
+                            <div class="valorCentro">{{ procesoSeleccionado.capacidad_stock }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2794] }}</div>
+                        </div>
+                        <div class="p22" >
+                            <div class="valorCentro">{{ procesoSeleccionado.capacidad_stock_pct }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2799] }}</div>
+                        </div>
+                    </div>
+                    <div class="dobleCaja" [style.marginTop.px]="8">
+                        <div class="p21">
+                            <div class="valorCentro">{{ procesoSeleccionado.capacidad_proceso }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2793] }}</div>
+                        </div>
+                        <div class="p22">
+                            <div class="valorCentro">{{ procesoSeleccionado.capacidad_proceso_pct }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2798] }}</div>
+                        </div>
+                    </div>
+
+                                  
+                </button>
+
+                <button class="tarjeta registro_2" mat-button (click)="detalleProceso(50)" [ngClass]="{ tarAlarmada: procesoSeleccionado.lotesEPPorAlarmar + procesoSeleccionado.lotesEPAlarmados > 0 }">
+
+                    <div class="doble_titulo">
+                        <div class="textoTar">{{ this.servicio.rTraduccion()[2802] }}</div>
+                        <div class="derecha_2" *ngIf="grActual==1"><div class="escalamiento">0</div></div>
+                    </div>
+                    
+                    <div class="dobleCaja" [style.marginTop.px]="8">
+                        <div class="p11">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesEP }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2289] }}</div>
+                        </div>
+                        <div class="p12" >
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesEPPorAlarmar }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2797] }}</div>
+                        </div>
+                        <div class="p13" [ngClass]="{ pctBajo: procesoSeleccionado.lotesEPAlarmados > 0 }">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesEPAlarmados }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2800] }}</div>
+                        </div>
+                        <div class="p14">
+                            <div class="valorCentro">{{ procesoSeleccionado.itemsEP }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2796] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="tablaLotes"  >
+                        <div class="ayudaCampo" *ngIf="enProceso.length==0">{{ this.servicio.rTraduccion()[2808] }}</div>
+                        <div class="cabeceraTabla"  *ngIf="enProceso.length>0">
+                            <div class="col01">{{ this.servicio.rTraduccion()[763] }}</div>
+                            <div class="col02">{{ this.servicio.rTraduccion()[324] }}</div>
+                            <div class="col03"> {{ this.servicio.rTraduccion()[1299] }} </div>
+                            <div class="col04">{{ this.servicio.rTraduccion()[156] }}</div>
+                        </div>
+                        <div class="tablaItems" *ngIf="enProceso.length>0" >    
+                            <div class="detalleTabla" [ngClass]="{ detalleTabla1: enProcesoDet.alarmado == '1', detalleTabla2: enProcesoDet.alarmado == '2', detalleTabla4: enProcesoDet.prioridad != 10000 && enProcesoDet.inspecciones > 0, detalleTabla3: enProcesoDet.prioridad != 10000 }" *ngFor="let enProcesoDet of enProceso; let i = index" >
+                                <div class="col01">{{ enProcesoDet.numero }}</div>
+                                <div class="col02">{{ enProcesoDet.parte }}</div>
+                                <div class="col03">{{ enProcesoDet.fecha | date:this.servicio.rIdioma().fecha_06 }}</div>
+                                <div class="col04">{{ enProcesoDet.tiempo }}</div>
+                            </div>    
+                        </div>
+                    </div>
+                                      
+                </button>
+
+               
+                <button class="tarjeta registro_2" mat-button (click)="detalleProceso(20)" [ngClass]="{ tarAlarmada: procesoSeleccionado.lotesESPorAlarmar + procesoSeleccionado.lotesESAlarmados > 0 }">
+
+                    <div class="doble_titulo">
+                        <div class="textoTar">{{ this.servicio.rTraduccion()[2803] }}</div>
+                        <div class="derecha_2" *ngIf="grActual==1"><div class="escalamiento">0</div></div>
+                    </div>
+                    
+                    <div class="dobleCaja" [style.marginTop.px]="8">
+                        <div class="p11">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesES }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2289] }}</div>
+                        </div>
+                        <div class="p12" >
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesESPorAlarmar }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2797] }}</div>
+                        </div>
+                        <div class="p13" [ngClass]="{ pctBajo: procesoSeleccionado.lotesESAlarmados > 0 }">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesESAlarmados }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2800] }}</div>
+                        </div>
+                        <div class="p14">
+                            <div class="valorCentro">{{ procesoSeleccionado.itemsES }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2796] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="tablaLotes"  >
+                        <div class="ayudaCampo" *ngIf="enStock.length==0">{{ this.servicio.rTraduccion()[2809] }}</div>
+                        <div class="cabeceraTabla"  *ngIf="enStock.length>0">
+                            <div class="col01">{{ this.servicio.rTraduccion()[763] }}</div>
+                            <div class="col02">{{ this.servicio.rTraduccion()[324] }}</div>
+                            <div class="col03"> {{ this.servicio.rTraduccion()[1299] }} </div>
+                            <div class="col04">{{ this.servicio.rTraduccion()[156] }}</div>
+                        </div>
+                        <div class="tablaItems" *ngIf="enStock.length>0" >    
+                            <div class="detalleTabla" *ngFor="let enStockDet of enStock; let i = index" [ngClass]="{ detalleTabla1: enStockDet.alarmado == '1', detalleTabla2: enStockDet.alarmado == '2', detalleTabla4: enStockDet.prioridad != 10000 && enStockDet.inspecciones > 0, detalleTabla3: enStockDet.prioridad != 10000 }">
+                                <div class="col01">{{enStockDet.numero }}</div>
+                                <div class="col02">{{ enStockDet.parte }}</div>
+                                <div class="col03">{{ enStockDet.fecha | date:this.servicio.rIdioma().fecha_06 }}</div>
+                                <div class="col04">{{ enStockDet.tiempo }}</div>
+                            </div>  
+                        </div>
+                    </div>
+                                      
+                </button>
+
+                
+                <button class="tarjeta registro_2" mat-button (click)="detalleProceso(0)">
+
+                    <div class="doble_titulo">
+                        <div class="textoTar">{{ this.servicio.rTraduccion()[2801] }}</div>
+                        <div class="derecha_2" *ngIf="grActual==1"><div class="escalamiento">0</div></div>
+                    </div>
+                    
+                    <div class="dobleCaja" [style.marginTop.px]="8">
+                        <div class="p11">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesEE }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2289] }}</div>
+                        </div>
+                        <div class="p12" >
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesEEPorAlarmar }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2797] }}</div>
+                        </div>
+                        <div class="p13" [ngClass]="{ pctBajo: procesoSeleccionado.lotesEEAlarmados > 0 }">
+                            <div class="valorCentro">{{ procesoSeleccionado.lotesEEAlarmados }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2800] }}</div>
+                        </div>
+                        <div class="p14">
+                            <div class="valorCentro">{{ procesoSeleccionado.itemsEE }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2796] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="tablaLotes"  >
+                        <div class="ayudaCampo" *ngIf="enEspera.length==0">{{ this.servicio.rTraduccion()[2807] }}</div>
+                        <div class="cabeceraTabla"  *ngIf="enEspera.length>0">
+                            <div class="col01">{{ this.servicio.rTraduccion()[763] }}</div>
+                            <div class="col02">{{ this.servicio.rTraduccion()[324] }}</div>
+                            <div class="col03"> {{ this.servicio.rTraduccion()[1299] }} </div>
+                            <div class="col04">{{ this.servicio.rTraduccion()[156] }}</div>
+                        </div>
+                        <div class="tablaItems" *ngIf="enEspera.length>0" >    
+                            <div class="detalleTabla" *ngFor="let enEsperaDet of enEspera; let i = index" [ngClass]="{ detalleTabla4: enEsperaDet.prioridad != 10000 && enEsperaDet.inspecciones > 0, detalleTabla3: enEsperaDet.prioridad != 10000 }">
+                                <div class="col01">{{enEsperaDet.numero }}</div>
+                                <div class="col02">{{ enEsperaDet.parte }}</div>
+                                <div class="col03">{{ enEsperaDet.fecha | date:this.servicio.rIdioma().fecha_06 }}</div>
+                                <div class="col04">{{ enEsperaDet.tiempo }}</div>
+                            </div>  
+                        </div>
+                    </div>
+                                      
+                </button>
+            </div>
+
+            <div class="detalle" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verRegistro == 3">
+                <button class="tarjeta registro" mat-button *ngFor="let detalle of detalles; let i = index" (click)="nada(proceso)" [ngClass]="{ tarAlarmada: detalle.alarmado != '0' }">
+
+                    <div class="doble_titulo">
+                        <div class="textoTar">{{ this.servicio.rTraduccion()[763] + ': ' + detalle.numero }}</div>
+                        <div class="derecha_2" *ngIf="grActual==1"><div class="escalamiento"></div></div>
+                    </div>
+
+                    <div class="imagen" *ngIf="detalle.mostrarImagen == 'S'"><img class="imaReg" [src]="detalle.imagen" (error)="imagenErrorParte(i)"></div>
+                    <mat-icon class="iconGrande" *ngIf="detalle.mostrarImagen == 'N'" [svgIcon]="iconoParte"></mat-icon>
+                        
+
+                    <div class="dobleCaja" [style.marginTop.px]="5">
+                        <div class="p8">
+                            <div class="valorIzquierda">{{ detalle.referencia }}</div>    
+                            <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[324] }}</div>    
+                        </div>
+                        <div class="p15">
+                            <div class="valorIzquierda">{{ detalle.nombre }}</div>    
+                            <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2795] }}</div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="dobleCaja" [style.marginTop.px]="5">
+                        <div class="p8" [ngClass]="{ prioridad2: detalle.prioridad != 10000 && detalle.inspecciones>0, prioridad: detalle.prioridad != 10000 && detalle.inspecciones==0}">
+                            <div class="valorCentro">{{ (detalle.prioridad == 10000 ? this.servicio.rTraduccion()[8] : detalle.prioridad) }}</div>    
+                            <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2131] }}</div>
+                        </div>
+                        <div class="p15">
+                            <div class="valorIzquierda">{{ detalle.estado }}</div>    
+                            <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2264] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="dobleCaja" [style.marginTop.px]="5">
+                        <div class="p6">
+                            <div class="valorIzquierda">{{ ( detalle.estado == this.servicio.rTraduccion()[2274] || !detalle.hasta ? this.servicio.rTraduccion()[449] : detalle.hasta | date:this.servicio.rIdioma().fecha_04 ) }}</div>    
+                            <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2281] }}</div>
+                        </div>
+                        <div class="p7" [ngClass]="{ detalleTabla2: detalle.alarmado == '2', detalleTabla1: detalle.alarmado == '1' }">
+                            <div class="valorCentro">{{ detalle.tiempo}}</div>    
+                            <div class="tituloCentro_p">{{ detalle.titulo }}</div>    
+                        </div>
+                    </div>
+                    
+                </button>
+            </div>
+
+            <div class="identificar" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verRegistro == 2">
+                <div class="detalle">
+                    <button class="tarjeta registro" [ngClass]="{ tarAlarmada: proceso.espera > 0 }" mat-button *ngFor="let proceso of procesos; let i = index" (click)="identificar(proceso)">
+                        <div class="doble_titulo">
+                            <div class="textoTar"> {{ proceso.nombre ? proceso.nombre : this.servicio.rTraduccion()[8] }}</div>
+                            <div class="derecha_2" *ngIf="grActual==1"><div class="escalamiento">0</div></div>
+                        </div>
+                        <div class="imagen" *ngIf="proceso.mostrarImagen == 'S'"><img class="imaReg" [src]="proceso.imagen" (error)="imagenError(i)"></div>
+                        <mat-icon class="iconGrande" *ngIf="proceso.mostrarImagen == 'N'" [svgIcon]="iconoGeneral"></mat-icon>
+                            
+                        <div class="dobleCaja">
+                            <div class="p1">
+                                <div class="valorCentro">{{ proceso.totall }}</div>    
+                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2289] }}</div>
+                            </div>
+                            <div class="p2" >
+                                <div class="valorCentro">{{ proceso.en_proceso }}</div>    
+                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2275] }}</div>
+                            </div>
+                            <div class="p3" [ngClass]="{ pctBajo: proceso.espera > 0 }">
+                                <div class="valorCentro">{{ proceso.espera }}</div>    
+                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2274] }}</div>
+                            </div>
+                            <div class="p4">
+                                <div class="valorCentro">{{ proceso.stock }}</div>    
+                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2276] }}</div>
+                            </div>
+                        </div>
+                        <div class="dobleCaja" [style.marginTop.px]="8">
+                            <div class="p6">
+                                <div class="valorCentro">{{ proceso.stock + this.servicio.rTraduccion()[436] + proceso.capacidad_stock + ' (' + proceso.pctstock + '%)' }}</div>    
+                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2269] }}</div>
+                            </div>
+                            <div class="p7">
+                                <div class="valorCentro">{{ proceso.en_proceso + this.servicio.rTraduccion()[436] + proceso.cap_proceso + ' (' + proceso.pctproceso + '%)' }}</div>    
+                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2268] }}</div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="plantilla" @esquema (@esquema.done)="salidaEfecto($event)"   *ngIf="verRegistro==2">
+                <div class="registroCaja">
+                </div>
+            </div>
+            <div class="subir" *ngIf="verIrArriba" @arriba>
+                <button class="subirBoton" mat-flat-button (click)="irArriba()" [matTooltip]="irArribaTT" matTooltipClass = "toolTip2">
+                    <mat-icon class="subirIcono">keyboard_arrow_up</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="marcoProceso" *ngIf="verEspera">
+        
+        <div class="barraProceso" *ngIf="conLote==1">
+            <div class="indiceProcesoLote2">
+                <div class="registroAdicionalCaja"   >
+                    <span class="registroValorEscaneoTit">{{ detLote.titulo }}</span>
+                </div>
+                <div class="registroAdicionalCajasDet">
+                    <div class="registroImagenParteDet" *ngIf="detLote.mostrarImagen == 'S'"  ><img class="registroImagenPropia" [src]="detLote.imagen" (error)="imagenErrorLote()"></div>
+                    <div class="registroImagenParteDet" *ngIf="detLote.mostrarImagen == 'N'" ><mat-icon class="iconPB_99" [svgIcon]="iconoParte"></mat-icon></div>
+                    <div class="dobleDatos"   >
+                        <div class="registroAdicionalCaja">
+                            <div class="registroValorEscaneo">{{ detLote.producto }}</div>    
+                            <div class="tituloEscaneo">{{ this.servicio.rTraduccion()[2795] }}</div>
+                        </div>
+                        <div class="materialDet">
+                            <div class="registroAdicionalCajaDet2" >
+                                <div class="registroValorEscaneo">{{ detLote.numero }}</div>    
+                                <div class="tituloEscaneo">{{ this.servicio.rTraduccion()[331] }}</div> 
+                            </div>
+                            <div class="registroAdicionalCaja" [style.marginLeft.px]="1">
+                                <div class="registroValorEscaneo">{{ detLote.refproducto }}</div>    
+                                <div class="tituloEscaneo">{{ this.servicio.rTraduccion()[698] }}</div>
+                            </div>
+                        </div>
+                        <div class="materialDet">
+                            <div class="registroAdicionalCajaDet2" >
+                                <div class="registroValorEscaneo">{{ detLote.fecha | date:this.servicio.rIdioma().fecha_02 }}</div>    
+                                <div class="tituloEscaneo">{{ this.servicio.rTraduccion()[2123] }}</div>
+                            </div>
+                            <div class="registroAdicionalCaja" [style.marginLeft.px]="1">
+                                <div class="registroValorEscaneo">{{ detLote.estadoLote }}</div>    
+                                <div class="tituloEscaneo">{{ this.servicio.rTraduccion()[2264] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dobleDet">
+                    <div class="registroCabeceraPie"   >
+                        <span class="registroCabeceraTextoPie">{{ detLote.subTitulo }}</span>
+                    </div>
+                    <div class="registroCabeceraAlarmado"  >
+                            <i class="iconshock-materialblack-general-clock"></i>
+                        <span class="registroCabeceraTextoPie2">{{ detLote.tiempo }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="barraProceso2"  [style.boxShadow]="'0px 0px 1px 2px tomato'" *ngIf="conLote==2">
+            <div class="registroAdicionalCaja"   >
+                <span class="registroValorEscaneoTit">{{ detLote.titulo }}</span>
+            </div>
+            <div class="registroAdicionalCajaDet"  *ngIf="detLote.producto">
+                <div class="registroValorEscaneo">{{ detLote.producto }}</div>    
+                <div class="tituloEscaneo">{{ detLote.literal }}</div> 
+            </div>
+            <div class="dobleDet">
+                <div class="registroCabeceraPie"   >
+                    <span class="registroCabeceraTextoPie">{{ detLote.subTitulo }}</span>
+                </div>
+                <div class="registroCabeceraAlarmado"  >
+                    <i class="iconshock-materialblack-general-clock"></i>
+                    <span class="registroCabeceraTextoPie2">{{ detLote.tiempo }}</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>

@@ -1,0 +1,122 @@
+<div class="contenido" class="mat-typography">
+    
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_paro"></mat-icon>
+        <span class="titulo">{{ datos.titulo }}</span>
+    </div>
+    <div class="cajaLista">
+        <div mat-dialog-conten class ="lista">
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[308] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.concepto" name="datos.concepto">
+                        <mat-option *ngFor="let concepto of conceptos; let i = index" [value]="concepto.id">{{ concepto.nombre }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[180] }}</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[309] }}</span>       
+            </div>
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[761] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.area" name="datos.area">
+                        <mat-option *ngFor="let area of areas; let i = index" [value]="area.id">{{ area.nombre }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[180] }}</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3771] }}</span>       
+            </div>
+
+            <div class="registroCampo" [ngStyle]="{'color': datos.accion == 0 ? 'var(--texto_boton)' : 'var(--texto_boton_inactivo)', 'border-color': datos.accion == 0 ? 'var(--borde_tarjeta)' : 'var(--texto_boton_inactivo)'}">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[348] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <input matInput #txtT1 type="number" [(ngModel)]="datos.tiempo" maxlength="6"  max="999999" autocomplete="off" name="datos.tiempo" #tiempo="ngModel" [disabled]="datos.accion > 0">
+                    <span class="gris" matSuffix>{{ calcularHR(datos.tiempo) }}</span>
+                    <mat-hint [ngClass]="{ pista: datos.accion == 0, pistaI: datos.accion > 0 }" align="start">{{ this.servicio.rTraduccion()[180] }}</mat-hint>
+                    <mat-hint [ngClass]="{ pista: datos.accion == 0, pistaI: datos.accion > 0 }" align="end">{{ this.servicio.rTraduccion()[350] }}</mat-hint>
+                </mat-form-field>  
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[349] }}</span>                                 
+            </div>
+
+            <div class="registroCampo" [ngStyle]="{'color': datos.accion == 0 ? 'var(--texto_boton)' : 'var(--texto_boton_inactivo)', 'border-color': datos.accion == 0 ? 'var(--borde_tarjeta)' : 'var(--texto_boton_inactivo)'}">
+                <div class="registroTitulo" >{{ this.servicio.rTraduccion()[351] }}</div>    
+                <mat-form-field class="texto">
+                    <mat-select [(value)]="datos.finaliza_sensor" name="datos.finaliza_sensor" [disabled]="datos.accion > 0">
+                        <mat-option value="S">{{ this.servicio.rTraduccion()[352] }}</mat-option>
+                        <mat-option value="N">{{ this.servicio.rTraduccion()[353] }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[354] }}</span>    
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[355] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <input matInput #txtNombre [(ngModel)]="datos.paro" maxlength="50" autocomplete="off" name="datos.paro"  #paro ="ngModel" >
+                    <button mat-button *ngIf="datos.paro" matSuffix mat-icon-button aria-label="Clear" (click)="datos.paro = '';">
+                        <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                    </button>
+                    <mat-hint class="pista" align="end">{{ paro.value?.length || 0 }} / 50</mat-hint>
+                    <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[180] }}</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[356] }}</span>       
+            </div>            
+
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[357] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" [(ngModel)]="datos.notas" maxlength="100" autocomplete="off" name="datos.notas" #notas="ngModel"></textarea>
+                    <button mat-button *ngIf="datos.notas" matSuffix mat-icon-button aria-label="Clear" (click)="datos.notas = ''">
+                        <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                    </button>
+                    <mat-hint class="pista" align="end">{{ notas.value?.length || 0 }} / 100</mat-hint>
+                    <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[358] }}</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[359] }}</span>       
+            </div>
+
+            <div class="registroCampo" *ngIf="datos.accion> 0">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[360] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" #txtNotas [(ngModel)]="datos.resultados" maxlength="100" autocomplete="off" name="datos.resultados" #resultados="ngModel"></textarea>
+                    <button mat-button *ngIf="datos.resultados" matSuffix mat-icon-button aria-label="Clear" (click)="datos.resultados = ''">
+                        <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                    </button>
+                    <mat-hint class="pista" align="end">{{ resultados.value?.length || 0 }} / 100</mat-hint>
+                    <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[358] }}</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[361] }}</span>       
+            </div>
+
+            
+        </div>
+    </div>
+
+
+    <div class="pie" mat-dialog-actions *ngIf="datos.accion==0">
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)" [disabled]="datos.concepto==0 || datos.area==0 || !datos.concepto || !datos.area || !datos.paro || datos.paro.length==0">
+            <mat-icon [ngClass]="{ iconPB_3: datos.concepto>0 && datos.area>0 && datos.paro, iconPB_3_disabled: datos.concepto==0 || datos.area==0 || !datos.paro || datos.paro.length==0 }" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[362] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[77] }}</span>
+        </button>
+    </div>
+
+    <div class="pie" mat-dialog-actions *ngIf="datos.accion>1">
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)" [disabled]="datos.concepto==0 || datos.area==0 || !datos.concepto || !datos.area || datos.tiempo==0 || !datos.tiempo || !datos.paro || datos.paro.length==0">
+            <mat-icon [ngClass]="{ iconPB_3: datos.concepto>0 && datos.area>0 && datos.tiempo && datos.tiempo > 0 && datos.paro, iconPB_3_disabled: datos.concepto==0 || datos.area==0 || datos.tiempo==0 || !datos.tiempo || !datos.paro || datos.paro.length==0 }" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[363] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[77] }}</span>
+        </button>
+    </div>
+</div>
+    

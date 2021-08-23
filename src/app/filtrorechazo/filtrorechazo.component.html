@@ -1,0 +1,88 @@
+<div class="contenido" class="mat-typography">
+    
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_filtro"></mat-icon>
+        <span class="titulo">{{ this.servicio.rTraduccion()[329] }}</span>
+    </div>
+    <div class="cajaLista">
+        <div mat-dialog-conten class ="lista">
+
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3774] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select #lstC0 [(ngModel)]="datos.clasificacion" name="datos.clasificacion">
+                        <mat-option value="-1">{{ this.servicio.rTraduccion()[3775] }}</mat-option>
+                        <mat-option value="0">{{ this.servicio.rTraduccion()[3776] }}    </mat-option>
+                        <mat-option *ngFor="let concepto of conceptos; let i = index" [value]="concepto.id">{{ concepto.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3777] }}</span>       
+            </div>
+
+
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[322] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.maquina" name="datos.maquina">
+                        <mat-option value="-1">{{ this.servicio.rTraduccion()[3399] }}</mat-option>
+                        <mat-option *ngFor="let maquina of maquinas; let i = index" [value]="maquina.id">{{ maquina.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[323] }}</span>       
+            </div>
+
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[324] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.producto" name="datos.producto">
+                        <mat-option value="-1">{{ this.servicio.rTraduccion()[325] }}</mat-option>
+                        <mat-option *ngFor="let producto of productos; let i = index" [value]="producto.id">{{ producto.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[326] }}</span>       
+            </div>
+
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[327] }}</div>    
+                <div class="columnas">
+                    <mat-form-field class="cajaTexto">
+                        <input matInput [matDatepicker]="dp"  [(ngModel)]="datos.fecha" name="datos.fecha">
+                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                        <mat-datepicker #dp
+                                        startView="multi-year"
+                                        (monthSelected)="chosenMonthHandler($event, dp)"
+                                       >
+                        </mat-datepicker>
+                      </mat-form-field>
+                                                        
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[328] }}</span>    
+            </div>          
+
+            
+        </div>
+    </div>
+
+
+    <div class="pie" mat-dialog-actions>
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)">
+            <mat-icon class="iconPB_3" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[329] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar03=true;" (mouseout)="validar03=false;" [ngClass]="{ botHover: validar03 }" (click)="quitarFiltro()">
+            <mat-icon class="iconPB" svgIcon="i_eliminar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[317] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[77] }}</span>
+        </button>
+    </div>
+
+</div>
+    

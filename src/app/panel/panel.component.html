@@ -1,0 +1,215 @@
+<div id="todo" class="mat-typography">
+    <div class="pantallaError"   *ngIf="pantalla==1">
+        <div class="cabeceraMensaje" >{{ errorTitulo }}</div>
+        <div class="mensaje" [innerHTML]="errorMensaje"></div>
+    </div>
+    <div class="catalogos">
+        <div class="cabecera"  @esquema_top *ngIf="verTop">
+            <div class="columnas">
+            
+                <button class="boton regreso" mat-button (mouseover)="hoverp01=true;" (mouseout)="hoverp01=false;" [ngClass]="{botTomado: grActual==1, botHover: hoverp01}" (click)="graficar(1)">
+                    <mat-icon class="iconoBarras iconPB_2" svgIcon="i_lineas" ></mat-icon>
+                    <div class="texto_d">{{ this.servicio.rTraduccion()[2878] }}</div>
+                </button>
+                <button class="boton regreso" mat-button (mouseover)="hoverp02=true;" (mouseout)="hoverp02=false;" [ngClass]="{botTomado: grActual==2, botHover: hoverp02}" (click)="graficar(2)">
+                    <mat-icon class="iconoBarras iconPB_2" svgIcon="i_maquina" ></mat-icon>
+                    <div class="texto_d">{{ this.servicio.rTraduccion()[2879] }}</div>
+                </button>
+                <button class="boton regreso" mat-button (mouseover)="hoverp03=true;" (mouseout)="hoverp03=false;" [ngClass]="{botTomado: grActual==3, botHover: hoverp03}" (click)="graficar(3)">
+                    <mat-icon class="iconoBarras iconPB_2" svgIcon="i_responsable" ></mat-icon>                    
+                    <div class="texto_d">{{ this.servicio.rTraduccion()[2877] }}</div>
+                </button>
+            </div>
+            <div class="columnas seccionDer">
+                <button class="boton regreso2 seccionDer" mat-button (mouseover)="descargarD=true;" (mouseout)="descargarD=false;" [ngClass]="{botHover: descargarD}" (click)="exportar();">
+                    <mat-icon class="iconoBarras iconPB_2" svgIcon="i_excel" ></mat-icon>
+                    <div class="texto_d">{{this.servicio.rTraduccion()[2260] }}</div>
+                </button>
+                <button class="boton regreso2" mat-button (mouseover)="derecha=true;" (mouseout)="derecha=false;" [ngClass]="{botTomado: soloAlarmados, botHover: derecha}" (click)="alarma()">
+                    <mat-icon class="iconoBarras iconPB_2" svgIcon="i_alarmas" ></mat-icon>
+                    <div class="texto_d">{{ this.servicio.rTraduccion()[2880] }}</div>
+                </button>
+                <button class="boton regreso2" mat-button (mouseover)="derecha2=true;" (mouseout)="derecha2=false;" [ngClass]="{botTomado: soloBR, botHover: derecha2}" (click)="BR()" *ngIf="servicio.rVersion().modulos[5] == 1 && grActual==2">
+                    <mat-icon class="iconoBarras iconPB_2" svgIcon="i_rates" ></mat-icon>
+                    <div class="texto_d">{{ this.servicio.rTraduccion()[2881] }}</div>
+                </button>
+                <div class="seccionDer buscadorCaja" *ngIf="verBuscar">
+                    <mat-form-field class="buscador" floatLabel="never">
+                        <input #txtBuscar matInput [placeholder]="etiBuscar" type="text" [(ngModel)]="textoBuscar" (keydown.enter)="filtrar()" (keydown.escape)="escapar()" >
+                        <button mat-button *ngIf="textoBuscar" matSuffix mat-iscon-button aria-label="Clear" (click)="textoBuscar = '';cambiando();">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="contenedorScroll" cdkScrollable>
+            <div class="detalle" [@.disabled]="!animando" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="modelo==1 && servicio.rVersion().modulos[5] == 1 && grActual!=3">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && listoMostrar">{{ this.servicio.rTraduccion()[2887]}}</div>
+                <div class="contenido" *ngFor="let registro of registros; let i = index" >
+                    <button class="tarjeta registro" @esquema_del mat-button (mouseover)="arreHover[i]=true;" (mouseout)="arreHover[i]=false;" (click)="verMaquina(i)" [ngClass]="{ tarAlarmada: +registro.reportest > 0 }" *ngIf="registro.imprimir">
+                        <div class="doble_titulo">
+                            <div class="textoTar"> {{ registro.nombre ? registro.nombre : this.servicio.rTraduccion()[8] }}</div>
+                            <div class="derecha" *ngIf="grActual==1"><div class="escalamiento">{{ registro.tmaquinas }}</div></div>
+                        </div>
+
+                        <div class="equipoEFI" *ngIf="servicio.rVersion().modulos[5] == 0">                        
+                            <div class="imagen" *ngIf="arreImagenes[i] != 'N' && visualizarImagen && registro.oee=='N'"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)"></div>
+                            <mat-icon *ngIf="arreImagenes[i] == 'N' || !visualizarImagen && registro.oee=='N' && i == 0" class="iconGrande" [svgIcon]="i_planta"></mat-icon>
+                            <mat-icon *ngIf="arreImagenes[i] == 'N' || !visualizarImagen && registro.oee=='N' && i > 0" class="iconGrande" [svgIcon]="iconoGeneral"></mat-icon>
+                        </div>
+                    
+                        <div class="equipoEFI" *ngIf="servicio.rVersion().modulos[5] == 1">
+
+
+                            <div class="rateImagen" *ngIf="registro.oee=='N'">                        
+                                <div class="imagen2" *ngIf="arreImagenes[i] != 'N' && visualizarImagen"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)"></div>
+                                <mat-icon *ngIf="arreImagenes[i] == 'N' || !visualizarImagen && i == 0" class="iconGrande2" [svgIcon]="i_planta"></mat-icon>
+                                <mat-icon *ngIf="arreImagenes[i] == 'N' || !visualizarImagen && i > 0" class="iconGrande2" [svgIcon]="iconoGeneral"></mat-icon>
+                            </div>
+
+                            <div class="rate" @aparecer *ngIf="muestra==0 && grActual==2 && i > 0 && registro.oee=='S'">
+                                <div class="esperadoefi" [ngClass]="{ indicadorRojo: registro.rate_efecto == 'B', indicadorVerde:registro.rate_efecto != 'B' }" *ngIf="servicio.rVersion().modulos[5] == 1 && grActual==2 && i > 0 && registro.oee=='S'">{{ ((registro.rate_teorico == 0 ? 0 : (registro.rate / registro.rate_teorico) * 100) | number:parIndicador) + '%'}}</div>
+                                <div class="numero" *ngIf="registro.rate!=-100">{{ registro.rate | number:'1.0-1' }}</div>
+                                <div class="numero2" *ngIf="registro.rate!=-100">{{ registro.ratemed }}</div>
+                                <div class="numero" *ngIf="registro.rate==-100">{{arreTiempoestado[i]}}</div>
+                                <div class="numero4" *ngIf="registro.rate==-100">{{ registro.oee_estado == 'N' ? this.servicio.rTraduccion()[2883] : this.servicio.rTraduccion()[2884] }} <br> {{ registro.oee_estado == 'N' ? (registro.oee_estado_cambio | date:this.servicio.rIdioma().fecha_05) : (registro.oee_estado_cambio | date:this.servicio.rIdioma().fecha_05) }}</div>
+                                <mat-icon class="iconPB_4" *ngIf="registro.rate_efecto!='N'" [style.color]="registro.rate_efecto == 'B' ? configuracion.bajo_color : configuracion.alto_color" [ngClass]="{ oeeSubir: registro.rate_efecto=='A', oeeBajar: registro.rate_efecto=='B' }" svgIcon="i_bajar" ></mat-icon>
+                            </div>
+
+                            
+                            <div class="contenedor" @aparecer *ngIf="i == 0 || (muestra==1 && registro.oee=='S') || (grActual==1)">
+                                <div class="valorEFI" [style.color]="colorEFI">{{ (arreIndicadores[i].oee_m | number:parIndicador) + '%' }}</div>
+                                <dx-circular-gauge id="gauge" [value]="arreIndicadores[i].oee_m" [subvalues]="arreIndicadores[i].oee_m">
+                                    <dxo-animation [enabled]="animadoEFI"></dxo-animation>
+                                    <dxo-subvalue-indicator
+                                        type="triangleMarker"
+                                        [color]="colorEFI"
+                                        offset="3">
+                                    </dxo-subvalue-indicator>
+                                    <dxo-scale
+                                        [startValue]="0"
+                                        [endValue]="100"
+                                        [tickInterval]="20">
+                                        <dxo-tick [color]="colorEFI"></dxo-tick>
+                                        <dxo-label [useRangeColors]="true" indentFromTick="1">
+                                            <dxo-font [size]="20" weight="600"></dxo-font>
+                                        </dxo-label>
+                                        
+                                    </dxo-scale>
+                                    <dxo-value-indicator
+                                        type="triangleNeedle"
+                                        [color]="colorEFI"
+                                        width="15"
+                                        offset="5">
+                                        
+                                    </dxo-value-indicator>
+                                    <dxo-range-container width="10">
+                                        <dxi-range [startValue]="0" [endValue]="configuracion.bajo_hasta" [color]="configuracion.bajo_color"></dxi-range>
+                                        <dxi-range [startValue]="configuracion.bajo_hasta" [endValue]="configuracion.medio_hasta" [color]="configuracion.medio_color"></dxi-range>
+                                        <dxi-range [startValue]="configuracion.medio_hasta" [endValue]="100" [color]="configuracion.alto_color"></dxi-range>
+                                    </dxo-range-container>
+                                    
+                                </dx-circular-gauge>
+                            </div>
+                        </div>
+                        <div class="doble_t">
+                            <div class="tercio">                        
+                                <div class="titulo">{{ this.servicio.rTraduccion()[2876] }}</div>
+                                <div class="valor" *ngIf="muestra==0">{{ this.servicio.rTraduccion()[139] }}</div>
+                                <div class="valor" *ngIf="muestra==0"> {{this.servicio.rTraduccion()[2689] }} </div>
+                                <div class="valor" *ngIf="muestra==0"> {{this.servicio.rTraduccion()[2686] }} </div>
+                                <div class="valor" *ngIf="muestra==1"> {{this.servicio.rTraduccion()[2885] }} </div>
+                                <div class="valor" *ngIf="muestra==1">{{ this.servicio.rTraduccion()[576] }}</div>
+                                <div class="valor" *ngIf="muestra==1"> {{this.servicio.rTraduccion()[2886] }} </div>
+                            </div>
+                            <div class="tercio">                        
+                                <div class="titulo_c">{{ this.servicio.rTraduccion()[2461] }}</div>
+                                <div class="valor_c" *ngIf="muestra==1" [ngStyle]=" { 'background-color': +configuracion.esperado_efi > +arreIndicadores[i].efi_m ? configuracion.bajo_color : 'none' }">{{ +arreIndicadores[i].efi_m | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==1" [ngStyle]=" { 'background-color': +configuracion.esperado_ftq > +arreIndicadores[i].ftq_m ? configuracion.bajo_color : 'none' }">{{ +arreIndicadores[i].ftq_m | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==1" [ngStyle]=" { 'background-color': +configuracion.esperado_dis > +arreIndicadores[i].dis_m ? configuracion.bajo_color : 'none' }">{{ +arreIndicadores[i].dis_m | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==0">{{ +registro.docs_m  }}</div>
+                                <div class="valor_c" *ngIf="muestra==0" [ngStyle]=" { 'background-color': +configuracion.esperado_mttr < +registro.mttrc_m ? configuracion.bajo_color : 'none' }">{{ +registro.mttrc_m | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==0" [ngStyle]=" { 'background-color': +configuracion.esperado_mtbf > +registro.mtbfc_m ? configuracion.bajo_color : 'none' }">{{ +registro.mtbfc_m | number:parIndicador}}</div>
+                            </div>
+                            <div class="tercio">                        
+                                <div class="titulo_c">{{ this.servicio.rTraduccion()[2477] }}</div>
+                                <div class="valor_c" *ngIf="muestra==1" [ngStyle]=" { 'background-color': +configuracion.esperado_efi > +arreIndicadores[i].efi_y ? configuracion.bajo_color : 'none' }">{{ +arreIndicadores[i].efi_y | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==1" [ngStyle]=" { 'background-color': +configuracion.esperado_ftq > +arreIndicadores[i].ftq_y ? configuracion.bajo_color : 'none' }">{{ +arreIndicadores[i].ftq_y | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==1" [ngStyle]=" { 'background-color': +configuracion.esperado_dis > +arreIndicadores[i].dis_y ? configuracion.bajo_color : 'none' }">{{ +arreIndicadores[i].dis_y | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==0" >{{ +registro.docs_y }}</div>
+                                <div class="valor_c" *ngIf="muestra==0" [ngStyle]=" { 'background-color': +configuracion.esperado_mttr < +registro.mttrc_y ? configuracion.bajo_color : 'none' }">{{ +registro.mttrc_y | number:parIndicador}}</div>
+                                <div class="valor_c" *ngIf="muestra==0" [ngStyle]=" { 'background-color': +configuracion.esperado_mtbf > +registro.mtbfc_y ? configuracion.bajo_color : 'none' }">{{ +registro.mtbfc_y | number:parIndicador}}</div>
+                            </div>
+                        </div>
+                        <div class="doble_titulo_b" *ngIf="registro.reportest">
+                            <div class="tercio_1">
+                                ({{ registro.reportest }})
+                            </div>
+                            <div class="tercio_2">
+                                {{ (registro.narea ? registro.narea : registro.reporteid ? this.servicio.rTraduccion()[2882] + ': ' + registro.reporteid : '') }}
+                            </div>
+                            <div class="tercio_3">
+                                {{ arreTiempos[i] }}
+                            </div>
+                        </div>
+                    </button>
+                </div>                
+            </div>
+
+            <div class="detalle" [@.disabled]="!animando" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="(modelo==1 && servicio.rVersion().modulos[5] != 1) || (grActual == 3 && yaVer)">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && listoMostrar">{{ this.servicio.rTraduccion()[2887] }}</div>
+                <div class="contenido" *ngFor="let registro of registros; let i = index" >
+                    <button class="tarjeta_p registro" @esquema_del mat-button (mouseover)="arreHover[i]=true;" (mouseout)="arreHover[i]=false;" (click)="verMaquina(i)" [ngClass]="{ tarAlarmada_p: registro.reportest > 0 }" *ngIf="registro.imprimir">
+                        <div class="doble_titulo">
+                            <div class="textoTar"> {{ registro.nombre ? registro.nombre : this.servicio.rTraduccion()[8] }}</div>
+                            <div class="derecha" *ngIf="grActual==1"><div class="escalamiento">{{ registro.tmaquinas }}</div></div>
+                        </div>
+
+                        <div class="imagen" *ngIf="arreImagenes[i] != 'N' && visualizarImagen"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)"></div>
+                        <mat-icon *ngIf="arreImagenes[i] == 'N' || !visualizarImagen" class="iconGrande" [svgIcon]="iconoGeneral"></mat-icon>
+                        <div class="doble_t">
+                            <div class="tercio">                        
+                                <div class="titulo">{{ this.servicio.rTraduccion()[2876] }}</div>
+                                <div class="valor">{{ this.servicio.rTraduccion()[139] }}</div>
+                                <div class="valor"> {{this.servicio.rTraduccion()[2689] }} </div>
+                                <div class="valor"> {{this.servicio.rTraduccion()[2686] }} </div>
+                            </div>
+                            <div class="tercio">                        
+                                <div class="titulo_c">{{ this.servicio.rTraduccion()[2461] }}</div>
+                                <div class="valor_c">{{ +registro.docs_m  }}</div>
+                                <div class="valor_c" [ngStyle]=" { 'background-color': +configuracion.esperado_mttr < +registro.mttrc_m ? configuracion.bajo_color : 'none' }">{{ registro.mttrc_m | number:parIndicador}}</div>
+                                <div class="valor_c" [ngStyle]=" { 'background-color': +configuracion.esperado_mtbf > +registro.mtbfc_m ? configuracion.bajo_color : 'none' }">{{ registro.mtbfc_m | number:parIndicador}}</div>
+                            </div>
+                            <div class="tercio">                        
+                                <div class="titulo_c">{{ this.servicio.rTraduccion()[2477] }}</div>
+                                <div class="valor_c">{{ +registro.docs_y }}</div>
+                                <div class="valor_c" [ngStyle]=" { 'background-color': +configuracion.esperado_mttr < +registro.mttrc_y ? configuracion.bajo_color : 'none' }">{{ registro.mttrc_y | number:parIndicador}}</div>
+                                <div class="valor_c" [ngStyle]=" { 'background-color': +configuracion.esperado_mtbf > +registro.mtbfc_y ? configuracion.bajo_color : 'none' }">{{ registro.mtbfc_y | number:parIndicador}}</div>
+                            </div>
+                        </div>
+                        <div class="doble_titulo_b" *ngIf="registro.reportest">
+                            <div class="tercio_1">
+                                ({{ registro.reportest }})
+                            </div>
+                            <div class="tercio_2">
+                                {{ (registro.narea ? registro.narea : registro.reporteid ? this.servicio.rTraduccion()[2882] + ': ' + registro.reporteid : '') }}
+                            </div>
+                            <div class="tercio_3">
+                                {{ arreTiempos[i] }}
+                            </div>
+                        </div>
+                    </button>
+                </div>                
+            </div>
+
+        </div>
+
+        
+        
+        <div class="subir" *ngIf="verIrArriba" @arriba>
+            <button class="subirBoton" mat-flat-button (click)="irArriba()" [matTooltip]="irArribaTT" matTooltipClass = "toolTip">
+                <mat-icon class="subirIcono">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+    </div>

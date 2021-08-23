@@ -1,0 +1,64 @@
+<div class="contenido" class="mat-typography">
+    
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_falla"></mat-icon>
+        <span class="titulo">{{ this.servicio.rTraduccion()[168] }}</span>
+    </div>
+    <div class="registroCampo">     
+        <div class="registroTitulo">{{ this.servicio.rTraduccion()[201] }}</div>    
+        <div class="registroValor">
+            <mat-form-field class="texto">
+                <input matInput #txtT1 [(ngModel)]="reporte" maxlength="20" type="number" autocomplete="off" name="reporte"  #reporte1 ="ngModel" (keydown.enter)="buscarReporte()" (input)="iniReporte()">
+                <button mat-button *ngIf="reporte" matSuffix mat-icon-button aria-label="Clear" (click)="reporte = '';iniReporte()">
+                    <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                </button>
+                <mat-hint [ngClass]="{ pista: detalle.contabilizar=='S', pistaError: detalle.contabilizar=='N' }" align="start">{{ detalle.contabilizar=='S' ? this.servicio.rTraduccion()[169] : this.servicio.rTraduccion()[170] }}</mat-hint>
+            </mat-form-field>     
+        </div>    
+    </div>
+    <div class="dobleColumna">
+        <div class="registroCampoST">
+            <div class="registroTituloST">{{ detalle.fecha_reporte == '-' ? '-' : detalle.fecha_reporte | date:this.servicio.rIdioma().fecha_07 }}</div>    
+            <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[173] }}</div>    
+        </div>
+        <div class="registroCampoST" [style.marginLeft.px]="5">
+            <div class="registroTituloST">{{ detalle.nestatus }}</div>    
+            <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[171] }}</div>    
+        </div>
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.nsolicitante }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[154] }}</div>    
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.nmaquina }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[172] }}</div>    
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.nfalla }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[174] }}</div>    
+    </div>
+    <div class="dobleColumna">
+        <div class="registroCampoST" [style.minWidth.%]="33" [style.maxWidth.%]="33">
+            <div class="registroTituloST">{{ !detalle.contabilizar_fecha ? this.servicio.rTraduccion()[8] : detalle.contabilizar_fecha | date:this.servicio.rIdioma().fecha_04 }}</div>    
+            <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[175] }}</div>    
+        </div>
+        <div class="registroCampoST" [style.minWidth.%]="60" [style.maxWidth.%]="60" [style.marginLeft.px]="5">
+            <div class="registroTituloST">{{ !detalle.ncambio ? this.servicio.rTraduccion()[8] : detalle.ncambio }}</div>    
+            <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[176] }}</div>    
+        </div>
+    </div>
+    
+    <div class="pie" mat-dialog-actions>
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01, negativo: encontrado && tituloBoton==this.servicio.rTraduccion()[157], positivo: encontrado && tituloBoton!=this.servicio.rTraduccion()[157] }" (click)="validar(1)" [disabled]="!encontrado"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon [ngClass]="{ iconPB_3: encontrado && tituloBoton!=this.servicio.rTraduccion()[157], iconPB_3_r: encontrado && tituloBoton==this.servicio.rTraduccion()[157], iconPB_3_disabled: !encontrado }" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ tituloBoton }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[177] }}</span>
+        </button>
+    </div>
+</div>
+    

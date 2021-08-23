@@ -1,0 +1,542 @@
+<div id="todo" class="mat-typography">
+    <div class="pantallaError" *ngIf="pantalla==1">
+        <div class="cabeceraMensaje">{{ errorTitulo }}</div>
+        <div class="mensaje" [innerHTML]="errorMensaje"></div>
+    </div>
+    <div class="catalogos">
+        <div class="cabecera" [ngStyle]="{'height': movil ? '50px' : ''  }">
+            <div *ngIf="vistaOperador && miSeleccion<100">
+                <button class="boton regreso positivo" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-stroked-button (click)="valAtender()" (mouseover)="hoverp[0]=true;" (mouseout)="hoverp[0]=false;" [ngClass]="{botTomado: seleccion==11, botHover: hoverp[0]}">
+                    <mat-icon class="iconPB_2" svgIcon="i_tecnicos" ></mat-icon>
+                    <span class="texto_d2">{{ this.servicio.rTraduccion()[491] }}</span>
+                </button>
+                <button class="boton regreso" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[1]=true;" (mouseout)="hoverp[1]=false;" [ngClass]="{botTomado: miSeleccion==1, botHover: hoverp[1]}" (click)="regresar(1)" [disabled]="!boton01">
+                    <mat-icon class="iconPB_2" svgIcon="i_procesos" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <mat-icon *ngIf="!movil" class="iconPB_3" [svgIcon]="(laSeleccion[0] > 0 ? 'in_seleccionado_vacio' : 'in_pregunta')"></mat-icon>
+                    <div class="texto_d" *ngIf="!movil">{{laSeleccion[4]}}</div>
+                </button>
+                <button class="boton regreso" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[2]=true;" (mouseout)="hoverp[2]=false;" [ngClass]="{botTomado: miSeleccion==2, botHover: hoverp[2]}" (click)="regresar(2)" [disabled]="!boton02">
+                    <mat-icon class="iconPB_2" svgIcon="i_partes" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <mat-icon *ngIf="!movil" class="iconPB_3" [svgIcon]="(laSeleccion[1] > 0 ? 'in_seleccionado_vacio' : 'in_pregunta')"></mat-icon>
+                    <div *ngIf="!movil" class="texto_d">{{laSeleccion[5]}}</div>
+                </button>
+                
+                <button class="boton regreso" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[3]=true;" (mouseout)="hoverp[3]=false;" [ngClass]="{botHover: hoverp[3]}" (click)="regresar(99)" *ngIf="laSeleccion[0]>0 && laSeleccion[1]>0 && envioCancelado && cantidadPedir > 0">
+                    <mat-icon class="iconPB_2" svgIcon="in_mensaje" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil"  class="texto_d2">{{ this.servicio.rTraduccion()[138] }}</div>
+                </button>
+                <button class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[4]=true;" (mouseout)="hoverp[4]=false;" [ngClass]="{botTomado: miSeleccion==15, botHover: hoverp[4]}" [disabled]="!boton14" (click)="reportes(15)" *ngIf="configuracion.ver_reportes_final=='S'">
+                    <mat-icon class="iconPB_2" svgIcon="i_general" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" [ngClass]="{ bag: rsaAlarmado==0, bag_d: rsaAlarmado==2 }">{{ total.kp }}</div>
+                    <div *ngIf="!movil" class="texto_d2">{{ this.servicio.rTraduccion()[3909] }}</div>
+                </button> 
+            </div>
+            
+            <div *ngIf="!vistaOperador && miSeleccion<100">
+                <button class="boton regreso2 botTomado" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" *ngIf="miSeleccion==21" mat-button (mouseover)="hoverp[5]=true;" (mouseout)="hoverp[5]=false;" [ngClass]="{ botHover: hoverp[5] }" (click)="regresar(0)">
+                    <mat-icon class="iconPB_2" svgIcon="i_regresar" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[140] }}</div> 
+                </button>
+                <button class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" *ngIf="miSeleccion!=21" mat-button (mouseover)="hoverp[6]=true;" (mouseout)="hoverp[6]=false;" [ngClass]="{botTomado: miSeleccion==11, botHover: hoverp[6]}" [disabled]="!boton11" (click)="reportes(11)">
+                    <mat-icon class="iconPB_2" svgIcon="i_falla" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" [ngClass]="{ bag: rsaAlarmado==0, bag_a: rsaAlarmado==1, bag_d: rsaAlarmado==2 }">{{ total.kp }}</div>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[3909] }}</div>
+                </button>
+                <button class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" *ngIf="miSeleccion==21" mat-button (mouseover)="hoverp[7]=true;" (mouseout)="hoverp[7]=false;" [ngClass]="{botHover: hoverp[7]}" (click)="guardar()" [disabled]="guardando">
+                    <mat-icon class="iconPB_2" svgIcon="i_guardar" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[145] }}</div>
+                </button>
+                <button class="boton regreso2 seccionDer" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[8]=true;" (mouseout)="hoverp[8]=false;" [ngClass]="{botHover:hoverp[8]}" (click)="finalizar()" *ngIf="configuracion.recuperar_sesion=='S'">
+                    <mat-icon class="iconPB_2" svgIcon="i_salir" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[146] }}</div>
+                </button>
+            </div>
+
+            <div *ngIf="miSeleccion>=100 && miSeleccion<130">
+                <button class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[9]=true;" (mouseout)="hoverp[9]=false;" [ngClass]="{ botHover: hoverp[9], botTomado: miSeleccion==100 }" (click)="this.filtrarInventario = 0;rRegistros(100)">
+                    <mat-icon class="iconPB_2" svgIcon="i_produccion" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <mat-icon class="iconBag3" *ngIf="miSeleccion==100" svgIcon="in_seleccionado"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[4043] }}</div> 
+                </button>
+                <button class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[10]=true;" (mouseout)="hoverp[10]=false;" [ngClass]="{botTomado: miSeleccion==110, botHover: hoverp[10]}" (click)="rRegistros(110)">
+                    <mat-icon class="iconBag3" *ngIf="miSeleccion==110" svgIcon="in_seleccionado"></mat-icon>
+                    <mat-icon class="iconPB_2" svgIcon="i_procesos" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[4044] }}</div>
+                </button>
+                <button class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[11]=true;" (mouseout)="hoverp[11]=false;" [ngClass]="{botHover:hoverp[11], botTomado: miSeleccion==120}" (click)="rRegistros(120)">
+                    <mat-icon class="iconBag3" *ngIf="miSeleccion==120" svgIcon="in_seleccionado"></mat-icon>
+                    <mat-icon class="iconPB_2" svgIcon="i_partes" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[4045] }}</div>
+                </button>
+                
+            </div>
+            <button class="boton regreso2 botTomado" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" *ngIf="miSeleccion==130 || miSeleccion==210" mat-button (mouseover)="hoverp[5]=true;" (mouseout)="hoverp[5]=false;" [ngClass]="{ botHover: hoverp[5] }" (click)="regresar(0)">
+                <mat-icon class="iconPB_2" svgIcon="i_regresar" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[140] }}</div> 
+            </button>
+            <button class="boton regreso2 negativo" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" *ngIf="miSeleccion==210" mat-button (mouseover)="hoverp[22]=true;" (mouseout)="hoverp[22]=false;" [ngClass]="{ botHover: hoverp[22] }" (click)="cancelarRuta(0)">
+                <mat-icon class="iconPB_2" svgIcon="i_eliminar" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[4216] }}</div> 
+            </button>
+            
+            <div class="seccionDer2">
+                <button class="boton regreso2"  *ngIf="miSeleccion==200" mat-button (mouseover)="hoverp[21]=true;" (mouseout)="hoverp[21]=false;" [ngClass]="{ botHover: hoverp[21] }" (click)="nuevo(1)" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }">
+                    <mat-icon class="iconPB_2" svgIcon="i_init" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[4164] }}</div>
+                </button>
+                <!--<button class="boton regreso2"  *ngIf="miSeleccion==200" mat-button (mouseover)="hoverp[20]=true;" (mouseout)="hoverp[20]=false;" [ngClass]="{ botHover: hoverp[20]}" (click)="filtrarKanban()" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }">
+                    <mat-icon class="iconPB_2" svgIcon="i_filtro" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[552] }}</div>
+                </button>
+                <button *ngIf="miSeleccion>=100" class="boton regreso2" [ngStyle]="{'width': movil ? '40px' : '', 'max-width': movil ? '40px' : '', 'height': movil ? '40px' : '70px'  }" mat-button (mouseover)="hoverp[16]=true;" (mouseout)="hoverp[16]=false;" [ngClass]="{botHover:hoverp[16]}" (click)="inventario(4)">
+                    <mat-icon class="iconPB_2" svgIcon="i_excel" [ngStyle]="{'margin-left': movil ? '-13px' : '0px'}"></mat-icon>
+                    <div *ngIf="!movil" class="texto">{{ this.servicio.rTraduccion()[2260] }}</div>
+                </button>-->
+                
+                <div class="buscadorCaja" *ngIf="verBuscar && modelo!=4 && !movil">
+                    <mat-form-field class="buscador" floatLabel="never">
+                        <input #txtBuscar matInput [placeholder]="tituloBuscar" type="text" [(ngModel)]="textoBuscar" (keydown.enter)="filtrar()" (keydown.escape)="escapar()" required>
+                        <button mat-button *ngIf="textoBuscar" matSuffix mat-iscon-button aria-label="Clear" (click)="textoBuscar = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                
+                <button class="boton regreso4" [style.minWidth.px]="32" mat-button (click)="verPanel=false;iniciado=false;cambiarVista(1)" [matTooltip] = "ayuda11" matTooltipClass = "toolTip" matTooltipShowDelay = "100" *ngIf="cambioVista && modelo !=4 && miSeleccion<100" mat-button (mouseover)="hoverp[14]=true;" (mouseout)="hoverp[14]=false;" [ngClass]="{ botHover: hoverp[14] }" [ngStyle]="{'width': movil ? '40px' : '48px', 'max-width': movil ? '40px' : '48px', 'height': movil ? '40px' : '70px'  }">
+                    <mat-icon class="iconPB_2" [svgIcon]="iconoVista" [ngStyle]="{'margin-left': movil ? '-13px' : '-8px'}"></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="cabecera_2" @esquema *ngIf="verTabla && modelo==3 && miSeleccion!=130 && miSeleccion!=100 && miSeleccion<200">
+            <div class="tablaCab_2" [style.maxWidth.px]="anchoTitulo"  [style.width.px]="anchoTitulo" *ngIf="miSeleccion==1">
+                <div class="col00" [style.width.px]="32"></div>
+                <div class="col02" *ngIf="miSeleccion==1">{{ this.servicio.rTraduccion()[3905] }}</div>
+            </div>
+            <div class="tablaCab_2" [style.maxWidth.px]="anchoTitulo"  [style.width.px]="anchoTitulo" *ngIf="miSeleccion==2">
+                <div class="col00"></div>
+                <div class="col02">{{ this.servicio.rTraduccion()[3906] }}</div>
+                <div class="col12" *ngIf="!movil">{{ this.servicio.rTraduccion()[698] }}</div>
+                <div class="col03" *ngIf="!movil">{{ this.servicio.rTraduccion()[4190] }}</div>
+                <div class="col01_2" *ngIf="!movil">{{ this.servicio.rTraduccion()[4007] }}</div>
+                <div class="col01_2" *ngIf="!movil" [ngStyle]="{'margin-right': hayManual ? '60px' : '0px'}">{{ this.servicio.rTraduccion()[3910] }}</div>
+            </div>
+
+            <div class="tablaCab" [style.maxWidth.px]="anchoTitulo"  [style.width.px]="anchoTitulo" *ngIf="miSeleccion>=11 && miSeleccion<100">
+                <div class="col00" ></div>
+                <div class="col11" >{{ this.servicio.rTraduccion()[150] }}</div>
+                <div class="col12" >{{ this.servicio.rTraduccion()[3988] }}</div>
+                <div class="col03" >{{ this.servicio.rTraduccion()[728] }}</div>
+                <div class="col03" *ngIf="!movil">{{ this.servicio.rTraduccion()[705] }}</div>
+                <div class="col03"  *ngIf="!movil">{{ this.servicio.rTraduccion()[4] }}</div>
+                <div class="col11">{{ this.servicio.rTraduccion()[586] }}</div>
+                <div class="col13"  *ngIf="!movil">{{ this.servicio.rTraduccion()[570] }}</div>
+            </div>
+
+             <div class="tablaCab" [style.maxWidth.px]="anchoTitulo"  [style.width.px]="anchoTitulo" *ngIf="miSeleccion>100 && miSeleccion<130">
+                <div class="col00" ></div>
+                <div class="col00_1">{{ this.servicio.rTraduccion()[4053] }}</div>
+                <div class="col03" *ngIf="miSeleccion!=120">{{ this.servicio.rTraduccion()[705] }}</div>
+                <div class="col03" *ngIf="miSeleccion!=110">{{ this.servicio.rTraduccion()[728] }}</div>
+                <div class="col03" *ngIf="!movil && miSeleccion!=120">{{ this.servicio.rTraduccion()[3986] }}</div>
+                <div class="col00_2" *ngIf="miSeleccion!=110">{{ this.servicio.rTraduccion()[4050] }}</div>
+                <div class="col01_3">{{ this.servicio.rTraduccion()[4058] }}</div>
+                <div class="col01_3">{{ this.servicio.rTraduccion()[4049] }}</div>
+                <div class="col01_3" [style.marginRight.px]="30" *ngIf="!movil">{{ this.servicio.rTraduccion()[4052] }}</div>
+            </div>
+
+            
+            
+        </div>
+        <div class="cabecera_4" @esquema *ngIf="miSeleccion==130">
+            <div class="tablaCab_3">
+                <div class="col100" [style.maxWidth.%]="40">
+                    <div class="col101">{{ this.servicio.rTraduccion()[705] + ':' }}</div>
+                    <div class="col102">{{ nombreProceso }}</div>
+                </div>
+                <div class="col100" [style.maxWidth.%]="60">
+                    <div class="col101">{{ this.servicio.rTraduccion()[728] + ':' }}</div>
+                    <div class="col102">{{ nombreParte }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="cabecera_5" @esquema *ngIf="miSeleccion==210">
+            <div class="tablaCab_3">
+                <div class="col100" [style.maxWidth.%]="30">
+                    <div class="col101">{{ this.servicio.rTraduccion()[4145] + ':' }}</div>
+                    <div class="col102">{{ rutaCabecera + ' / ' + rutaCabeceraNombre }}</div>
+                </div>
+                <div class="col100" [style.maxWidth.%]="30">
+                    <div class="col101">{{ this.servicio.rTraduccion()[3418] + ':' }}</div>
+                    <div class="col102">{{ uAsignado }}</div>
+                </div>
+                <div class="col100" [style.maxWidth.%]="20">
+                    <div class="col101">{{ this.servicio.rTraduccion()[2270] + ':' }}</div>
+                    <div class="col102">{{ cadAvance }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cabecera_2"  @esquema *ngIf="miSeleccion==130 && verTabla">
+            <div class="tablaCab" [style.maxWidth.px]="anchoTitulo">
+                <div class="col00_1" [style.marginLeft.px]="25">{{ this.servicio.rTraduccion()[4053] }}</div>
+                <div class="col00_2" [style.marginLeft.px]="5" [style.minWidth.px]="140">{{ this.servicio.rTraduccion()[584] }}</div>
+                <div class="col00_2" [style.minWidth.px]="100">{{ this.servicio.rTraduccion()[579] }}</div>
+                <div class="col01" [style.minWidth.px]="80">{{ this.servicio.rTraduccion()[586] }}</div>
+                <div class="col01" [style.minWidth.px]="80">{{ this.servicio.rTraduccion()[4094] }}</div>
+                <div class="col00_2">{{ this.servicio.rTraduccion()[4050] }}</div>
+                <div class="col00_2" [style.minWidth.px]="140">{{ this.servicio.rTraduccion()[698] }}</div>
+                <div class="col12">{{ this.servicio.rTraduccion()[4088] }}</div>
+                <div class="col03" [style.marginRight.px]="30">{{ this.servicio.rTraduccion()[704] }}</div>
+            </div>
+        </div>
+
+        <div class="contenedorScroll" cdkScrollable [style.overflowY]="verBarra" *ngIf="mostrarDetalle">
+            <div class="detalle" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==2 && miSeleccion <= 2">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && miSeleccion==1 && yaVer">{{ this.servicio.rTraduccion()[3918] }}</div>
+                <div class="ayudaCampo" *ngIf="registros.length==0 && miSeleccion==2" [innerHTML]="noNumerosParte"></div>
+                <div class="fueraBoton" *ngFor="let registro of registros; let i = index" >
+                    <button class="tarjeta registro" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{tarTomado: registro.id == laSeleccion[miSeleccion - 1], tarHover: registro.seleccionado }" (click)="seleccion(i)" [disabled]="!aceptarBoton">
+                        <div class="dentroBoton">
+                            <img id="barcode" [src]="registro.barcode" alt="" *ngIf="miSeleccion==2" />
+                            <div class="bagTipo" *ngIf="miSeleccion==2">{{ registro.tipo_surtido=='M' ? this.servicio.rTraduccion()[3998] : registro.tipo_surtido=='T' ? this.servicio.rTraduccion()[3999] : this.servicio.rTraduccion()[3997] }}</div>
+                            <div class="imagen" *ngIf="registro.mostrarImagen != 'N' && visualizarImagen"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)"></div>
+                            <mat-icon *ngIf="registro.mostrarImagen == 'N' || !visualizarImagen" class="iconGrande" [svgIcon]="iconoGeneral"></mat-icon>
+                            <div class="divisorP"></div>
+                            <div class="textoMediano">{{ registro.nombre }}</div>
+                            <div class="abajo" *ngIf="miSeleccion==2">                        
+                                <div class="dobleCaja">
+                                    <div class="doble" [style.width.%]="50">               
+                                        <div class="valor">{{ registro.referencia }}</div>
+                                        <div class="titulo">{{ this.servicio.rTraduccion()[698] }}</div>                            
+                                    </div>
+                                    <div class="doble_w" [style.width.%]="50" [ngClass]="{ doble_w_r: registro.ccambiada == 1 }">           
+                                        <mat-icon class="iconBag" svgIcon="i_reloj" *ngIf="+registro.por_surtir>0" [matTooltip] = "registro.tooltip" [matMenuTriggerFor]="menuColores" matTooltipClass = "toolTip" matTooltipShowDelay = "100"></mat-icon>
+                                        <div class="valor_w" [style.fontSize.px]="22">{{ registro.pedidoTexto }}</div>
+                                        <div class="titulo_w" [style.textAlign]="'center'">{{ registro.ccambiada == 0 ? this.servicio.rTraduccion()[3910] : this.servicio.rTraduccion()[4293] }}</div>   
+                                                                 
+                                    </div>
+                                </div>
+                                <div class="doble">                        
+                                    <div class="valor">{{ registro.ntipo }}</div>
+                                    <div class="titulo">{{ this.servicio.rTraduccion()[4190] }}</div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-button class="boton_2 regreso5" *ngIf="registro.tipo_surtido=='M'" matSuffix mat-icon-button aria-label="Clear" (click)="editarCantidad(i)">
+                        <mat-icon class="iconPB" svgIcon="i_editar"></mat-icon>
+                        <span class="titulo">{{ this.servicio.rTraduccion()[3937] }}</span>   
+                    </button>
+                </div>              
+            </div>
+
+
+            <div class="detalle" [@.disabled]="!animando" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==2 && miSeleccion >= 11 && miSeleccion!=100 && miSeleccion!=130 && miSeleccion!=200">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && listoMostrar">{{ this.servicio.rTraduccion()[3987] }}</div>
+                <button class="tarjeta registro_2" [@.disabled]="!animando" @esquema_del (@esquema_del.start)="mostrar(0)" (@esquema_del.done)="mostrar(1)"  *ngFor="let registro of registros; let i = index" mat-button (mouseover)="arreHover[i]=true;" (mouseout)="arreHover[i]=false;" [ngClass]="{tarAlarmada: registro.alarmado== 'S', tarHover: arreHover[i], tarS: sondeo==registro.id }" (click)="atender(i)">
+                    <div class="dentroBoton">
+                        <div class="bagTipo2">{{ registro.tipo_surtido=='M' ? this.servicio.rTraduccion()[3998] : registro.tipo_surtido=='T' ? this.servicio.rTraduccion()[3999] : this.servicio.rTraduccion()[3997] }}</div>
+                        <div class="textoTar">{{ this.servicio.rTraduccion()[3874] + ' ' + registro.id }}</div>
+                        <div class="imagen" *ngIf="registro.mostrarImagen != 'N' && visualizarImagen"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)"></div>
+                        <mat-icon *ngIf="registro.mostrarImagen == 'N' || !visualizarImagen" class="iconGrande" [svgIcon]="iconoGeneral"></mat-icon>
+                        <div class="divisorP"></div>
+                        <div class="textoMediano">{{ registro.nparte }}</div>
+                        <div class="abajo">                        
+                            <div class="dobleCaja">
+                                <div class="doble" [style.width.%]="50">               
+                                    <div class="valor">{{ registro.referencia }}</div>
+                                    <div class="titulo">{{ this.servicio.rTraduccion()[698] }}</div>                            
+                                </div>
+                                <div class="doble_w" [style.width.%]="50">                        
+                                    <div class="valor_w" [style.fontSize.px]="22">{{ (registro.cantidad_solicitada * 1 | number) + ' ' + registro.nunidad }}</div>
+                                    <div class="titulo_w">{{ this.servicio.rTraduccion()[3877] }}</div>   
+                                                             
+                                </div>
+                            </div>
+                            <div class="doble">                        
+                                <div class="valor">{{ registro.nproceso }}</div>
+                                <div class="titulo">{{ this.servicio.rTraduccion()[3876] }}</div>                            
+                            </div>
+                           
+                            <div class="doble" [style.marginTop.px]="-10">                        
+                                <div class="valor">{{ registro.narea }}</div>
+                                <div class="titulo">{{ this.servicio.rTraduccion()[3986] }}</div>                            
+                            </div>
+                        </div>
+
+
+                        <div class="divisorP"></div>
+                        <div class="doble_t">
+                            <div class="doble_s">                        
+                                <div class="valor">{{ registro.fecha_sugerida | date:this.servicio.rIdioma().fecha_06 }}</div>
+                                <div class="titulo" *ngIf="registro.estado<=10" [style.marginTop.px]="-10">{{ this.servicio.rTraduccion()[3988] }}</div>
+                            </div>
+
+                            <div *ngIf="contarTiempo" [ngClass]="{ doble_b: registro.alarmado == 'S' || arreTiempos[i] == '00:00:00', doble_n: registro.alarmado != 'S' && arreTiempos[i] != '00:00:00'}" [style.marginLeft.px]="15" [style.marginTop.px]="1">                        
+                                <div class="valor_n" [style.width.px]="110" [style.textAlign]="'center'">{{ ( arreTiempos[i] == "00:00:00" ? this.servicio.rTraduccion()[3326] : arreTiempos[i] ) }}</div>
+                                <div class="titulo" [style.width.px]="110" [style.textAlign]="'center'" *ngIf="registro.estado<=10" [style.marginTop.px]="-10">{{ registro.alarmado == 'S' ? this.servicio.rTraduccion()[3365] : arreTiempos[i] == '00:00:00' ? arreDemas[i] : this.servicio.rTraduccion()[2190] }}</div>
+                            </div>
+                        </div>  
+                    </div>
+                </button>                
+            </div>
+
+            
+            <div class="tabla" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && (miSeleccion>=1 && miSeleccion<=2)">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && miSeleccion==1 && yaVer">{{ this.servicio.rTraduccion()[3918] }}</div>
+                <div class="ayudaCampo" *ngIf="registros.length==0 && miSeleccion==2" [innerHTML]="noNumerosParte"></div>
+                <div class="tablaItems_a" *ngFor="let registro of registros; let i = index">  
+                    <button class="boton_b regreso3" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{botTomado: registro.id == laSeleccion[miSeleccion - 1], botHover: registro.seleccionado }" (click)="seleccion(i)" [disabled]="!aceptarBoton">
+                        <div #abotones class="tablaDet_2">
+                            <div class="col00">
+                                <div class="imagenLista" *ngIf="registro.mostrarImagen != 'N' && visualizarImagen"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)" loading="lazy" alt=".." ></div>
+                                <mat-icon *ngIf="registro.mostrarImagen == 'N' || !visualizarImagen" class="iconPB_6" [svgIcon]="iconoGeneral"></mat-icon>
+                            </div>
+                            <div class="col02">{{ registro.nombre }}</div>
+                            <div class="col12" *ngIf="!movil && miSeleccion==2">{{ registro.referencia }}</div>
+                            <div class="col03" *ngIf="!movil && miSeleccion==2">{{ registro.ntipo }}</div>
+                            <div class="col01_2" *ngIf="!movil && miSeleccion==2">{{ registro.por_surtir * 1 | number }}</div>
+                            <div class="col01_2" *ngIf="!movil && miSeleccion==2">{{ registro.pedidoTexto }}</div>
+                            
+                        </div>
+                    </button>    
+                    <button class="boton regreso6" mat-button *ngIf="hayManual" [disabled]="registro.tipo_surtido!='M'" (click)="editarCantidad(i)">
+                        <mat-icon class="iconPB" [style.marginLeft.px]="-15" svgIcon="i_editar"></mat-icon>
+                    </button>            
+                </div>                
+            </div>
+
+            <div class="tabla" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && miSeleccion==100">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && yaVer">{{ this.servicio.rTraduccion()[4042] }}</div>
+                <div class="k_tablaItems_a" *ngFor="let registro of registros; let i = index">    
+                    <button class="k_boton" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{botHover: registro.seleccionado }" (click)="regMov(i)" [disabled]="!aceptarBoton">
+                        <div class="k_tarjeta">
+                            <div class="k_imagenLista" *ngIf="registro.mostrarImagen != 'N' && visualizarImagen && !movil"><img class="k_imaReg" [src]="registro.imagen" (error)="imagenError(i)" loading="lazy" alt=".." ></div>
+                            <mat-icon *ngIf="registro.mostrarImagen == 'N' || !visualizarImagen" class="k_iconPB_6" [svgIcon]="iconoGeneral"></mat-icon>
+                            <div class="k_bagTipo">{{ i + 1 }}</div>
+                            <div class="k_col2" [ngStyle]="{'min-width': movil ? '200px' : '300px' }">
+                                <div class="k_campo1">{{ registro.nparte }}</div>    
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[728] }}</div>
+                                <div class="k_campo1">{{ registro.nproceso }}</div>
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[705] }}</div>
+                                <div class="k_campo1">{{ registro.narea }}</div>
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[3986] }}</div>
+                            </div>
+                            <div class="k_col2" *ngIf="!movil">
+                                <div class="k_campo1">{{ registro.nunidad ? registro.nunidad + (!registro.nunidadn ? '' : (' (' + registro.nunidadn + ')') ) : !registro.nunidadn ? '' : registro.nunidadn }}</div>    
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[4050] }}</div>
+                                <div class="k_campo1">{{ registro.punto_reorden * 1 | number }}</div>
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[4051] }}</div>
+                                <div class="k_campo1">{{ registro.por_surtir * 1 | number }}</div>
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[4052] }}</div>
+                            </div>
+                            <div class="k_col6">
+                                <div class="k_col1" [style.flex]="4" [style.marginTop.px]="15">{{ registro.saldo * 1 | number }}</div>
+                                <div class="k_titulo1" [style.flex]="4" >{{ this.servicio.rTraduccion()[4049] }}</div>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="k_boton2" [style.minWidth.px]="100" mat-button (click)="regMov(i)" (mouseover)="hoverp[17]=true;registro.seleccionado=true" (mouseout)="hoverp[17]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[17] && registro.seleccionado }" *ngIf="!movil">
+                        <mat-icon class="k_iconPB" svgIcon="i_movimientos"></mat-icon>
+                        <div class="k_texto">{{ this.servicio.rTraduccion()[4048] }}</div>
+                    </button>
+                    <button class="k_boton2" [style.minWidth.px]="90" mat-button (click)="regAjuste(i)" (mouseover)="hoverp[18]=true;registro.seleccionado=true" (mouseout)="hoverp[18]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[18] && registro.seleccionado }" *ngIf="!movil">
+                        <mat-icon class="k_iconPB" svgIcon="i_inventario"></mat-icon>
+                        <div class="k_texto">{{ this.servicio.rTraduccion()[4046] }}</div>
+                    </button> 
+                    <button class="k_boton2" [style.minWidth.px]="100" mat-button (click)="regConsumo(i)" (mouseover)="hoverp[19]=true;registro.seleccionado=true" (mouseout)="hoverp[19]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[19] && registro.seleccionado }" *ngIf="!movil">
+                        <mat-icon class="k_iconPB" svgIcon="i_inicializar"></mat-icon>
+                        <div class="k_texto">{{ this.servicio.rTraduccion()[4047] }}</div>
+                    </button> 
+                    <div class="k_col2" *ngIf="movil">
+                        <button class="k_boton3" [style.minWidth.px]="100" mat-button (click)="regMov(i)" (mouseover)="hoverp[17]=true;registro.seleccionado=true" (mouseout)="hoverp[17]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[17] && registro.seleccionado }">
+                            <div class="k_texto2">{{ this.servicio.rTraduccion()[4048] }}</div>
+                        </button>
+                        <button class="k_boton3" [style.minWidth.px]="90" mat-button (click)="regAjuste(i)" (mouseover)="hoverp[18]=true;registro.seleccionado=true" (mouseout)="hoverp[18]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[18] && registro.seleccionado }">
+                            <div class="k_texto2">{{ this.servicio.rTraduccion()[4046] }}</div>
+                        </button> 
+                        <button class="k_boton3" [style.minWidth.px]="100" mat-button (click)="regConsumo(i)" (mouseover)="hoverp[19]=true;registro.seleccionado=true" (mouseout)="hoverp[19]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[19] && registro.seleccionado }">
+                            <div class="k_texto2">{{ this.servicio.rTraduccion()[4047] }}</div>
+                        </button> 
+                    </div>
+
+                </div>                
+            </div>
+
+            <div class="tabla" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && miSeleccion==130">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && yaVer">{{ this.servicio.rTraduccion()[4087] }}</div>
+                <div class="tablaItems_a" *ngFor="let registro of registros; let i = index">    
+                    <button class="boton_3 regreso3" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{botHover: registro.seleccionado }" (click)="detalleMovimiento(i)" [disabled]="!aceptarBoton">
+                        <div #abotones class="tablaDet_2">
+                            <div class="col00">
+                                <mat-icon class="iconPB_6" [svgIcon]="iconoGeneral"></mat-icon>
+                            </div>
+                            <div class="col00_1" [style.marginLeft.px]="-10">{{ i + 1 }}</div>
+                            <div class="col00_2" [style.minWidth.px]="140">{{ registro.fecha | date:this.servicio.rIdioma().fecha_03 }}</div>
+                            <div class="col00_2" [style.minWidth.px]="100" [ngStyle]="{'color': registro.tipo == 'A' ? 'var(--fondo_boton_negativo)' : 'var(--texto_boton)' }">{{ registro.tipo == 'R' ? this.servicio.rTraduccion()[4089] : registro.tipo == 'A' ? this.servicio.rTraduccion()[4046] : this.servicio.rTraduccion()[4047]  }}</div>
+                            <div class="col01" [style.minWidth.px]="80" [ngStyle]="{'color': +registro.cantidad < 0 ? 'var(--fondo_boton_negativo)' : 'var(--texto_boton)' }">{{ registro.cantidad * 1 | number }}</div>
+                            <div class="col01" [style.minWidth.px]="80" [ngStyle]="{'color': +registro.balance < 0 ? 'var(--fondo_boton_negativo)' : 'var(--texto_boton)' }">{{ registro.balance * 1 | number }}</div>                   
+                            <div class="col00_2">{{ registro.unidad }}</div>
+                            <div class="col00_2" [style.minWidth.px]="140">{{ registro.referencia }}</div>
+                            <div class="col12">{{ registro.ncausa }}</div>
+                            <div class="col03">{{ registro.tipo_surtido == 'T' ? this.servicio.rTraduccion()[3999] + ' ' + registro.tarjeta_texto : registro.notas }}</div>
+                        </div>
+                    </button> 
+                </div>                
+            </div>
+
+            <div class="tabla" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && miSeleccion==200">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && yaVer">{{ this.servicio.rTraduccion()[4233] }}</div>
+                <div class="k_tablaItems_a" *ngFor="let registro of registros; let i = index">    
+                    <button class="k_boton" [style.height.px]="100" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{botHover: registro.seleccionado }" (click)="abrirRuta(i)">
+                        <div class="k_tarjeta">
+                            <div class="k_bagTipo">{{ i + 1 }}</div>
+                            <div class="k_col7">
+                                <div class="k_col11" [ngClass]="{ alarmado_borde: registro.estatus == 'Z'}" [style.marginTop.px]="5">{{ registro.id  }}</div>
+                                <div class="k_titulo1">{{ this.servicio.rTraduccion()[4209] }}</div>
+                               
+                            </div>
+                            <div class="k_col2" *ngIf="movil" [style.maxWidth.px]="200">
+                                <div class="k_campo1" [style.fontSize.px]="19">{{ registro.nombre }}</div>    
+                                <div class="k_campo1">{{ registro.nparte }}</div>    
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[728] }}</div>
+                                <div class="k_campo1">{{ registro.nproceso }}</div>
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[705] }}</div>
+                            </div>
+                            <div class="registroCaja" *ngIf="!movil">
+                                <div class="k_col2" [style.maxWidth.px]="500" [style.minWidth.px]="500">
+                                    <div class="k_campo2" [style.fontSize.px]="28" [style.marginTop.px]="10">{{ registro.nombre }}</div>    
+                                    <div class="k_campo2" [style.fontSize.px]="19" [style.marginTop.px]="10">{{ registro.nparte }}</div>    
+                                    <div class="k_titulo2" [style.fontSize.px]="15">{{ this.servicio.rTraduccion()[728] }}</div>
+                                </div>
+                                <div class="k_col2" [style.marginBottom.px]="7">
+                                    <div class="k_campo2" [style.fontSize.px]="28">{{ registro.fecha_siguiente | date:this.servicio.rIdioma().fecha_03 }}</div>
+                                    <div class="k_campo2" [style.fontSize.px]="19" [style.marginTop.px]="10">{{ registro.nproceso }}</div>    
+                                    <div class="k_titulo2" [style.fontSize.px]="15">{{ this.servicio.rTraduccion()[705] }}</div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="k_col7">
+                                <div *ngIf="contarTiempo" [ngClass]="{ doble_b: registro.alarmado == 'S' || arreTiempos[i] == '00:00:00', doble_n: registro.alarmado != 'S' && arreTiempos[i] != '00:00:00'}" [style.marginLeft.px]="15" [style.marginTop.px]="1">                        
+                                    <div class="valor_n" [style.width.px]="110" [style.textAlign]="'center'">{{ ( arreTiempos[i] == "00:00:00" ? this.servicio.rTraduccion()[3326] : arreTiempos[i] ) }}</div>
+                                    <div class="titulo" [style.width.px]="110" [style.textAlign]="'center'" [style.marginTop.px]="-10">{{ registro.alarmado == 'S' ? this.servicio.rTraduccion()[3365] : arreTiempos[i] == '00:00:00' ? arreDemas[i] : this.servicio.rTraduccion()[2190] }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    
+                </div>                
+            </div>
+
+            <div class="tabla" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && miSeleccion==210">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && yaVer">{{ this.servicio.rTraduccion()[4238] }}</div>
+                <div class="k_tablaItems_a" *ngFor="let registro of registros; let i = index;">
+                    <button class="k_boton" id="item-{{i}}" [style.height.px]="70" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{botHover: registro.seleccionado, botTomado: registro.secuencia == linea_siguiente && registro.estado < 10 }" (click)="editarPunto(i)" [disabled]="registro.estado >= 10 || (registro.estado < 10 && respetar_secuencia=='S' && registro.secuencia != linea_siguiente)">
+                        <div class="k_tarjeta">
+                            <div class="k_bagTipo">{{ registro.secuencia }}</div>
+                            <div class="k_imagenLista2" *ngIf="registro.mostrarImagen != 'N' && visualizarImagen"><img class="k_imaReg" [src]="registro.imagen" (error)="imagenError(i)" loading="lazy" alt=".." ></div>
+                            <mat-icon *ngIf="registro.mostrarImagen == 'N' || !visualizarImagen" class="k_iconPB_62" [svgIcon]="iconoGeneral"></mat-icon>
+                            <div class="k_col2" *ngIf="movil" [style.maxWidth.px]="200">
+                                <div class="k_campo1">{{ registro.nparte }}</div>    
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[728] }}</div>
+                                <div class="k_campo1">{{ registro.nproceso }}</div>
+                                <div class="k_titulo">{{ this.servicio.rTraduccion()[705] }}</div>
+                            </div>
+                            <div class="registroCaja" *ngIf="!movil">
+                                <div class="k_col2" [style.marginBottom.px]="7" [style.maxWidth.px]="250" [style.minWidth.px]="250">
+                                    <div class="k_campo2" [style.fontSize.px]="20">{{ registro.nproceso }}</div>    
+                                    <div class="k_titulo2" [style.fontSize.px]="15">{{ this.servicio.rTraduccion()[705] }}</div>
+                                </div>
+                                <div class="k_col2" [style.maxWidth.px]="400" [style.minWidth.px]="400">
+                                    <div class="k_campo2" [style.fontSize.px]="20">{{ registro.nparte }}</div>    
+                                    <div class="k_titulo2" [style.fontSize.px]="15">{{ this.servicio.rTraduccion()[728] }}</div>
+                                </div>
+                                <div class="k_col2" [style.marginBottom.px]="7">
+                                    <div class="k_campo2" [style.textAlign]="'center'" [style.fontSize.px]="28">{{ (registro.cantidad_solicitada * 1 | number) + ' ' + registro.nunidadc }}</div>    
+                                    <div class="k_titulo2" [style.textAlign]="'center'" [style.fontSize.px]="15">{{ this.servicio.rTraduccion()[3978] }}</div>
+                                </div>
+                            </div>
+                            <div class="k_col7" *ngIf="registro.estado < 10">
+                                <div *ngIf="contarTiempo" [ngClass]="{ doble_b: registro.alarmado != 'N' || arreTiempos[i] == '00:00:00', doble_n: registro.alarmado == 'N' && arreTiempos[i] != '00:00:00'}" [style.marginLeft.px]="15" [style.marginTop.px]="5" [style.height.px]="50">                        
+                                    <div class="valor_n" [style.width.px]="110" [style.textAlign]="'center'">{{ ( arreTiempos[i] == "00:00:00" ? this.servicio.rTraduccion()[3326] : arreTiempos[i] ) }}</div>
+                                    <div class="titulo" [style.width.px]="110" [style.textAlign]="'center'" [style.marginTop.px]="-14">{{ registro.alarmado == 'S' ? this.servicio.rTraduccion()[3365] : arreTiempos[i] == '00:00:00' ? arreDemas[i] : this.servicio.rTraduccion()[2190] }}</div>
+                                </div>
+                            </div>
+                            <div class="k_col7" *ngIf="registro.estado == 10">
+                                <div [ngClass]="{ doble_b: registro.alarmado != 'N', doble_n: registro.alarmado == 'N'}" [style.marginLeft.px]="15" [style.marginTop.px]="5" [style.height.px]="50">                        
+                                    <div class="valor_n" [style.width.px]="110" [style.textAlign]="'center'">{{ registro.ttiempo }}</div>
+                                    <div class="titulo" [style.width.px]="110" [style.textAlign]="'center'" [style.marginTop.px]="-14">{{ registro.alarmado != 'N' ? this.servicio.rTraduccion()[3365] : this.servicio.rTraduccion()[4220] }}</div>
+                                </div>
+                            </div>
+                            <div class="k_col7" *ngIf="registro.estado >= 90">
+                                <div Class="doble_n" [style.marginLeft.px]="15" [style.marginTop.px]="5" [style.height.px]="50">                        
+                                    <div class="valor_n" [style.fontSize.px]="18" [style.width.px]="110" [style.textAlign]="'center'">{{ this.servicio.rTraduccion()[4183] }}</div>
+                                    <div class="titulo" [style.width.px]="110" [style.textAlign]="'center'" [style.marginTop.px]="-14">{{ registro.alarmado != 'N' ? this.servicio.rTraduccion()[3365] : '' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="k_boton_cancel" mat-button (click)="cancelarPunto(i, 0)" (mouseover)="hoverp[23]=true;registro.seleccionado=true" (mouseout)="hoverp[23]=false;registro.seleccionado=false" [ngClass]="{botHover: hoverp[23] && registro.seleccionado }" *ngIf="!movil" [disabled]="registro.estado >= 10 || (registro.estado < 10 && respetar_secuencia=='S' && registro.secuencia != linea_siguiente)">
+                        <mat-icon class="k_iconPB" svgIcon="i_cancelar"></mat-icon>
+                        <div class="k_texto">{{ this.servicio.rTraduccion()[4339] }}</div>
+                    </button> 
+                    
+                </div>                
+            </div>
+
+
+            <div class="tabla" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && miSeleccion>100 && miSeleccion<130">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && yaVer">{{ this.servicio.rTraduccion()[4042] }}</div>
+                <div class="tablaItems_a" *ngFor="let registro of registros; let i = index">    
+                    <button class="boton_b regreso3" mat-button (mouseover)="registro.seleccionado=true;" (mouseout)="registro.seleccionado=false;" [ngClass]="{botHover: registro.seleccionado }" (click)="filtrarKanban(i)" [disabled]="!aceptarBoton">
+                        <div #abotones class="tablaDet_2">
+                            <div class="col00">
+                                <div class="imagenLista" *ngIf="registro.mostrarImagen != 'N' && visualizarImagen"><img class="imaReg" [src]="registro.imagen" (error)="imagenError(i)" loading="lazy" alt=".." ></div>
+                                <mat-icon *ngIf="registro.mostrarImagen == 'N' || !visualizarImagen" class="iconPB_6" [svgIcon]="iconoGeneral"></mat-icon>
+                            </div>
+                            <div class="col00_1">{{ i + 1 }}</div>
+                            <div class="col03" *ngIf="miSeleccion!=120" [style.marginLeft.px]="-10">{{ registro.nproceso }}</div>
+                            <div class="col03" *ngIf="miSeleccion!=110">{{ registro.nparte }}</div>
+                            <div class="col03" *ngIf="miSeleccion!=120">{{ registro.narea }}</div>                            
+                            <div class="col00_2" *ngIf="miSeleccion!=110">{{ registro.nunidad }}</div>
+                            <div class="col01_3">{{ registro.items * 1 | number }}</div>
+                            <div class="col01_3">{{ registro.saldo * 1 | number }}</div>
+                            <div class="col01_3">{{ registro.por_surtir * 1 | number }}</div>
+                        </div>
+                    </button>    
+                </div>                
+            </div>
+
+            
+            <div class="tabla" [@.disabled]="!animando" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verPanel && modelo==3 && (miSeleccion==11 || miSeleccion==15)">
+                <div class="ayudaCampo" *ngIf="registros.length==0 && listoMostrar">{{ this.servicio.rTraduccion()[3987] }}</div>
+                <div class="tablaItems_b">    
+                    <button class="boton_b regreso3" @esquema_del (@esquema_del.start)="mostrar(0)" (@esquema_del.done)="mostrar(1)"  *ngFor="let registro of registros; let i = index" (mouseover)="arreHover[i]=true;" (mouseout)="arreHover[i]=false;" [ngClass]="{ botHover: arreHover[i], botTomado: registro.id == laSeleccion[miSeleccion - 1], tablaDetS: sondeo==registro.id }" (click)="atender(i)">
+                        <div #abotones class="tablaDet_2">
+                            <div class="col00">
+                                <mat-icon class="iconPB_7" [svgIcon]="iconoGeneral"></mat-icon>
+                            </div>
+                            <div class="col11">{{ registro.id }}</div>
+                            <div class="col12">{{ registro.fecha_sugerida | date:this.servicio.rIdioma().fecha_03 }}</div>
+                            <div class="col03">{{ registro.nparte }}</div>
+                            <div class="col03" *ngIf="!movil">{{ registro.nproceso }}</div>
+                            <div class="col03" *ngIf="!movil">{{ registro.narea }}</div>
+                            <div class="col11" >{{ (registro.cantidad_solicitada * 1 | number) + ' ' + registro.nunidad }}</div>
+                            <div *ngIf="contarTiempo" [ngClass]="{ col13: registro.alarmado != 'S' && arreTiempos[i] != '00:00:00' , col13_a: registro.alarmado == 'S' || arreTiempos[i] == '00:00:00' }">{{ arreTiempos[i] == '00:00:00' ? arreDemas[i] : arreTiempos[i] }}</div>
+                            
+                        </div>      
+                    </button>  
+                </div>                
+            </div>
+
+            
+
+        <div class="subir" *ngIf="verIrArriba" @arriba>
+            <button class="subirBoton" mat-flat-button (click)="irArriba()" [matTooltip]="irArribaTT" matTooltipClass = "toolTip">
+                <mat-icon class="subirIcono">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,775 @@
+<div id="todo" class="mat-typography">
+    <div class="pantallaError"[ngStyle]="{'border': '1px solid' + colorFondoTarjeta}" *ngIf="pantalla==1">
+        <div class="cabeceraMensaje" >{{ errorTitulo }}</div>
+        <div class="mensaje" [innerHTML]="errorMensaje"></div>
+    </div>
+    <div class="catalogos" *ngIf="pantalla==2">
+        <div class="cabecera">
+            <div class="cabeceraMensaje" *ngIf="botonera1==9">{{ nCatalogo }}</div>
+            <div class="botonera1" *ngIf="botonera1==1">
+                <div class="izquierda">
+                    <button class="boton regreso9" *ngFor="let indice of indices; let i = index" mat-button (mouseover)="arreHover4[i]=true;" (mouseout)="arreHover4[i]=false;" [ngClass]="{ botHover: arreHover4[i], botTomado: i == vision }" (click)="procesarPantalla(i+1)" >
+                        <mat-icon class="iconPB_2" [svgIcon]="indice.icono"></mat-icon>
+                        <div class="texto">{{ indice.nombre }}</div> 
+                    </button>
+                    <button class="boton regreso9"mat-button (click)="regresar()" (mouseover)="bot10Sel=true;" (mouseout)="bot10Sel=false;" [ngClass]="{botHover: bot10Sel}"  [matTooltip] = "ayuda19" matTooltipClass = "toolTip" matTooltipShowDelay = "100" *ngIf="(maestroActual==4 && vision > 0 && vistaDetalle!=0) || (verRegistro==2)">
+                        <mat-icon class="iconPB_2" svgIcon="i_regresar"></mat-icon>
+                    <div class="texto">{{ this.servicio.rTraduccion()[140] }}</div>
+                    </button>
+                </div>
+                <div class="derecha">
+                    <button class="boton regreso9" mat-button (mouseover)="bot2Sel=true;" (mouseout)="bot2Sel=false;" [ngClass]="{botHover: bot2Sel}" (click)="nuevoRegistroGral()" *ngIf="maestroActual<2">
+                        <mat-icon class="iconPB_2" svgIcon="i_agregar"></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[551] }}</div> 
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot3Sel=true;" (mouseout)="bot3Sel=false;" [ngClass]="{botHover: bot3Sel}" (click)="descargar()">
+                        <mat-icon class="iconPB_2" svgIcon="i_descargar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[2260] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot4Sel=true;" (mouseout)="bot4Sel=false;" [ngClass]="{botHover: bot4Sel}" (click)="refrescar()">
+                        <mat-icon class="iconPB_2" svgIcon="i_refrescar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[272] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot5Sel=true;" (mouseout)="bot5Sel=false;" [ngClass]="{botHover: bot5Sel, botTomado: soloStock}" (click)="filtro()"  *ngIf="vision > 0 && maestroActual==4">
+                        <mat-icon class="iconPB_2" svgIcon="i_filtro" ></mat-icon>
+                        <div class="texto">{{ soloStock ? this.servicio.rTraduccion()[144] : this.servicio.rTraduccion()[2649] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot5Sel=true;" (mouseout)="bot5Sel=false;" [ngClass]="{botHover: bot5Sel, botTomado: soloActivas}" (click)="filtroCarga()" *ngIf="maestroActual==0 && nivelActual==0">
+                        <mat-icon class="iconPB_2" svgIcon="i_filtro" ></mat-icon>
+                        <div class="texto">{{ soloActivas ? this.servicio.rTraduccion()[3442] : this.servicio.rTraduccion()[3443] }}</div>
+                    </button>
+                    <div class="buscadorCaja" *ngIf="verBuscar">
+                        <mat-form-field class="buscador" floatLabel="never">
+                            <input #txtBuscar matInput [placeholder]="etiBuscar" type="text" [(ngModel)]="textoBuscar" (keydown.enter)="filtrar()" (keydown.escape)="escapar()" >
+                            <button mat-button *ngIf="textoBuscar" matSuffix mat-iscon-button aria-label="Clear" (click)="textoBuscar = '';cambiando();">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <button class="boton accion" mat-button (mouseover)="vistaSel=true;" (mouseout)="vistaSel=false;" [ngClass]="{botHover: vistaSel}" (click)="cambiarVista(1)" [matTooltip] = "ayuda11" matTooltipClass = "toolTip2" matTooltipShowDelay = "100" [disabled]="!boton04" *ngIf="verAhora">
+                        <mat-icon class="iconPB_2" [svgIcon]="iconoVista" ></mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="botonera1" *ngIf="botonera1==2">
+                <div class="izquierda">
+                    <button class="boton regreso9" *ngFor="let indice of indices; let i = index" mat-button (mouseover)="arreHover4[i]=true;" (mouseout)="arreHover4[i]=false;" [ngClass]="{ botHover: arreHover4[i] }" (click)="procesarPantalla(i+1)">
+                        <mat-icon class="iconPB_2" [svgIcon]="indice.icono"></mat-icon>
+                        <div class="texto">{{ indice.nombre }}</div> 
+                    </button>
+                </div>
+                <div class="derecha">
+                    <button class="boton regreso9" mat-button (mouseover)="bot1Sel=true;" (mouseout)="bot1Sel=false;" [ngClass]="{ botHover: bot1Sel }" (click)="nuevo()" [disabled]="botonera[0]" *ngIf="maestroActual!=4">
+                        <mat-icon class="iconPB_2" svgIcon="i_init"></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[553] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot3Sel=true;" (mouseout)="bot3Sel=false;" [ngClass]="{botHover: bot3Sel}" (click)="validarGuardar()" [disabled]="botonera[1]" *ngIf="maestroActual!=4">
+                        <mat-icon class="iconPB_2" svgIcon="i_guardar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[145] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot4Sel=true;" (mouseout)="bot4Sel=false;" [ngClass]="{botHover: bot4Sel}" (click)="cancelar()" [disabled]="botonera[2]" *ngIf="maestroActual!=4">
+                        <mat-icon class="iconPB_2" svgIcon="i_cancelar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[77] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot5Sel=true;" (mouseout)="bot5Sel=false;" [ngClass]="{botHover: bot5Sel}" (click)="copiar()" [disabled]="botonera[3]" *ngIf="maestroActual!=4">
+                        <mat-icon class="iconPB_2" svgIcon="i_copiar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[554] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot6Sel=true;" (mouseout)="bot6Sel=false;" [ngClass]="{botHover: bot6Sel}" (click)="validarInactivar(0, 1)" *ngIf="maestroActual!=6 && maestroActual!=4" [disabled]="botonera[4]">
+                        <mat-icon class="iconPB_2" svgIcon="i_inactivar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[555] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot7Sel=true;" (mouseout)="bot7Sel=false;" [ngClass]="{botHover: bot7Sel}" (click)="validarEliminar()" *ngIf="maestroActual!=4" [disabled]="botonera[5]">
+                        <mat-icon class="iconPB_2" svgIcon="i_eliminar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[388] }}</div>
+                    </button>        
+                    
+                    <button class="boton regreso9" mat-button (mouseover)="bot8Sel=true;" (mouseout)="bot8Sel=false;" [ngClass]="{botHover: bot8Sel}" (click)="descargarDet()"  *ngIf="maestroActual==4">
+                        <mat-icon class="iconPB_2" svgIcon="i_descargar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[2260] }}</div>
+                    </button>
+                    <button class="boton regreso9" mat-button (mouseover)="bot9Sel=true;" (mouseout)="bot9Sel=false;" [ngClass]="{botHover: bot9Sel}" (click)="refrescarLote()"  *ngIf="maestroActual==4">
+                        <mat-icon class="iconPB_2" svgIcon="i_refrescar" ></mat-icon>
+                        <div class="texto">{{ this.servicio.rTraduccion()[272] }}</div>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <div class="contenedorScroll" [style.color]="colorLetrasBox" [style.backgroundColor]="colorFondo" cdkScrollable [style.overflowY]="verBarra">
+            <div class="detalle" @esquema (@esquema.done)="salidaEfecto($event)" *ngIf="verRegistro==1">
+                <div @esquema  *ngFor="let registro of registros; let i = index">
+                    <div class="tarjeta registro" (mouseover)="arreHover[i]=true;" (mouseout)="arreHover[i]=false;" [ngClass]="{tarAlarmada: ((maestroActual==4 && (registro.espera > 0 || registro.estado == this.servicio.rTraduccion()[2274])) || (!registro.estatus || registro.estatus != this.servicio.rTraduccion()[1154])), tarHover: arreHover[i], tarS: sondeo==registro.id }">
+                        <button class="botonMaestro" mat-button (click)="editar(i)">
+                            <button class="boton arribaDer" mat-button (mouseover)="arreHover5[i]=true;" (mouseout)="arreHover5[i]=false;" [ngClass]="{botHover: arreHover5[i]}" (click)="explorar(registro.id, registro.nombre)" *ngIf="maestroActual==0 && nivelActual==0">
+                                <div class="textoArriba">{{this.servicio.rTraduccion()[2262] }}</div>
+                            </button>
+                            
+                            <mat-icon class="iconGrande" *ngIf="registro.mostrarImagen != 'S' || !verImagen" [svgIcon]="iconoGeneral"></mat-icon>
+                            <div class="registroImagen"  *ngIf="registro.mostrarImagen == 'S' && verImagen"><img class="registroImagenPropia" [src]="registro.imagen" (error)="imagenError(i)" (load)="imagenProcesada(i)"></div>
+
+                            <div class="textoMediano" *ngIf="maestroActual<4">{{ registro.nombre }}</div>
+                            <div class="textoMediano" *ngIf="maestroActual==4 && vistaDetalle==0">{{ registro.nombre }}</div>
+                            
+                            <div class="divisorP2"></div>
+                            
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vistaDetalle==1">
+                                <div class="p8">
+                                    <div class="valorIzquierda">{{ registro.numero }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[763] }}</div>
+                                </div>
+                                <div class="p15">
+                                    <div class="valorIzquierda">{{ registro.producto }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[144] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vistaDetalle==1" [style.marginTop.px]="5">
+                                <div class="p6">
+                                    <div class="valorIzquierda">{{ registro.nproceso }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2265] }}</div>
+                                </div>
+                                <div class="p7">
+                                    <div class="valorCentro">{{ registro.ruta_secuencia }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[1897] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vistaDetalle==1" [style.marginTop.px]="5">
+                                <div class="p16">
+                                    <div class="valorIzquierda">{{ registro.estado }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2264] }}</div>
+                                </div>
+                                <div class="p17">
+                                    <div class="valorCentro">{{ (registro.prioridad == 10000 ? this.servicio.rTraduccion()[8] : registro.prioridad) }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2131] }}</div>
+                                </div>
+                                <div class="p17">
+                                    <div class="valorCentro">{{ registro.ncarga }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2284] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vistaDetalle==1 && (vision==0 || vision==3 || vision==4)" [style.marginTop.px]="5">
+                                <div class="p6">
+                                    <div class="valorCentro">{{ registro.inicia | date:this.servicio.rIdioma().fecha_03 }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2271] }}</div>
+                                </div>
+                                <div class="p7" *ngIf="vision!=4 || registro.estado != 'Finalizado'">
+                                    <div class="valorCentro">{{ registro.estimada | date:this.servicio.rIdioma().fecha_03 }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2281] }}</div>
+                                </div>
+                                <div class="p7" *ngIf="registro.estado=='Finalizado'">
+                                    <div class="valorCentro">{{ registro.finaliza | date:this.servicio.rIdioma().fecha_03 }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2280] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vistaDetalle==1 && (vision==1 || vision==2)" [style.marginTop.px]="5">
+                                <div class="p6">
+                                    <div class="valorCentro">{{ registro.fecha | date:this.servicio.rIdioma().fecha_03 }}</div>    
+                                    <div class="tituloCentro_p" *ngIf="vision==1">{{ this.servicio.rTraduccion()[2278] }}</div>
+                                    <div class="tituloCentro_p" *ngIf="vision==2">{{ this.servicio.rTraduccion()[2279] }}</div>
+                                </div>
+                                <div class="p7">
+                                    <div class="valorCentro" *ngIf="registro.hasta">{{ registro.hasta == this.servicio.rTraduccion()[8] ? this.servicio.rTraduccion()[8] : (registro.hasta | date:this.servicio.rIdioma().fecha_03) }}</div>    
+                                    <div class="valorCentro" *ngIf="!registro.hasta">{{ this.servicio.rTraduccion()[8] }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2281] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vision==1 && vistaDetalle==0" [style.marginTop.px]="5">
+                                <div class="p1">
+                                    <div class="valorCentro">{{ registro.totall }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2289] }}</div>
+                                </div>
+                                <div class="p2" >
+                                    <div class="valorCentro">{{ registro.en_proceso }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2275] }}</div>
+                                </div>
+                                <div class="p3" [ngClass]="{ pctBajo: registro.espera > 0 }">
+                                    <div class="valorCentro">{{ registro.espera }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2274] }}</div>
+                                </div>
+                                <div class="p4">
+                                    <div class="valorCentro">{{ registro.stock }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2276] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vision==1 && vistaDetalle==0" [style.marginTop.px]="5">
+                                <div class="p6">
+                                    <div class="valorCentro">{{ registro.stock + this.servicio.rTraduccion()[436] + registro.capacidad_stock + ' (' + registro.pctstock + '%)' }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2269] }}</div>
+                                </div>
+                                <div class="p7">
+                                    <div class="valorCentro">{{ registro.en_proceso + this.servicio.rTraduccion()[436] + registro.cap_proceso + ' (' + registro.pctproceso + '%)' }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2268] }}</div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="p14" *ngIf="maestroActual>=2 && maestroActual<4">
+                                <div class="valorIzquierda">{{ registro.causa }}</div>    
+                                <div class="tituloIzquierda_p">{{ titulo_lote }}</div> 
+                            </div>
+                            <div class="p14" [style.marginTop.px]="5" *ngIf="maestroActual>=2 && maestroActual<4">
+                                <div class="valorIzquierda">{{ registro.producto }}</div>    
+                                <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[332] }}</div> 
+                            </div> 
+                            <div class="dobleCaja" [style.marginTop.px]="5" *ngIf="maestroActual>=2 && maestroActual<4">
+                                <div class="p8">
+                                    <div class="valorIzquierda">{{ registro.referencia }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[698] }}</div>
+                                </div>
+                                <div class="p15">
+                                    <div class="valorCentro">{{ registro.fecha | date:this.servicio.rIdioma().fecha_02 }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2277] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==1">
+                                <div class="p8">
+                                    <div class="valorIzquierda">{{ registro.referencia }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[698] }}</div>
+                                </div>
+                                <div class="p9">
+                                    <div class="valorCentro">{{ registro.orden }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2131] }}</div>
+                                </div>
+                                <div class="p13">
+                                    <div class="valorCentro">{{ registro.fecha | date:this.servicio.rIdioma().fecha_04}}</div>    
+                                    <div class="tituloCentro_p">{{ titulo_fecha }}</div>    
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==0 && nivelActual==1">
+                                <div class="p8">
+                                    <div class="valorIzquierda">{{ registro.referencia }}</div>    
+                                    <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[698] }}</div>
+                                </div>
+                                <div class="p9" *ngIf="maestroActual==0">
+                                    <div class="valorCentro">{{ registro.cantidad }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2240] }}</div>    
+                                </div>
+                                <div class="p10" *ngIf="maestroActual==0">
+                                    <div class="valorCentro">{{ registro.avance }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[153] }}</div>    
+                                </div>
+                                <div class="p11" [ngClass]="{ pctBajo: registro.pct > 0, pctAlcanzado: registro.pct == 100 }" *ngIf="maestroActual==0">
+                                    <div class="valorCentro">{{ registro.pct + '%' }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2270] }}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="dobleCaja" *ngIf="maestroActual==0 && nivelActual==0">
+                                <div class="p1">
+                                    <div class="valorCentro">{{ registro.equipo }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[568] }}</div>  
+                                </div>
+                                <div class="p2">
+                                    <div class="valorCentro">{{ registro.capacidad }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[1767] }}</div> 
+                                </div>
+                                <div class="p3">
+                                    <div class="valorCentro">{{ registro.piezas }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2076] }}</div>
+                                </div>
+                                <div class="p4">
+                                    <div class="valorCentro">{{ registro.partes }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2285] }}</div>
+                                </div>
+                            </div>
+                            <div class="dobleCaja" *ngIf="maestroActual==0 && nivelActual==0" [style.marginTop.px]="5">
+                                <div class="p1" [ngClass]="{ pctBajo: registro.pct > 0, pctAlcanzado: registro.pct == 100 }">
+                                    <div class="valorCentro">{{ registro.pct + '%' }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[705] }}</div>
+                                </div>
+                                <div class="p2" [ngClass]="{ pctBajo: registro.pct > 0, pctAlcanzado: registro.pct == 100 }">
+                                    <div class="valorCentro">{{ registro.pctc + '%' }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2272] }}</div>
+                                </div>
+                                <div class="p5" [ngClass]="{ pctBajo: registro.reprogramaciones > 0}">
+                                    <div class="valorCentro">{{ (registro.fecha != this.servicio.rTraduccion()[8] ? (registro.fecha | date:this.servicio.rIdioma().fecha_03) : this.servicio.rTraduccion()[8]) }}</div>    
+                                    <div class="tituloCentro_p">{{ (registro.reprogramaciones == 0 ? this.servicio.rTraduccion()[2492] : this.servicio.rTraduccion()[2493] + '(' + registro.sumado + ')') }}</div> 
+                                </div>
+                            </div>
+                            <div class="dobleCaja" *ngIf="maestroActual==0 && nivelActual==0" [style.marginTop.px]="5">
+                                <div class="p6">
+                                    <div class="valorCentro">{{ (registro.completada == 'Y' ? this.servicio.rTraduccion()[2297] : registro.completada == 'U' ? this.servicio.rTraduccion()[2298] : registro.completada == 'S' ? this.servicio.rTraduccion()[2299] : this.servicio.rTraduccion()[609]) }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[562] }}</div> 
+                                </div>
+                                <div class="p7">
+                                    <div class="valorCentro">{{ registro.fcambio }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[604] }}</div> 
+                                </div>
+                            </div>
+                            <div class="dobleCaja" *ngIf="maestroActual==0 && nivelActual==1" [style.marginTop.px]="5">
+                                <div class="p8">
+                                    <div class="valorCentro">{{ registro.id }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2282] }}</div>
+                                </div>
+                                <div class="p12">
+                                    <div class="valorCentro">{{ registro.fcambio | date:this.servicio.rIdioma().fecha_03 }}</div>     
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[604] }}</div> 
+                                </div>
+                            </div>
+
+                            <div class="dobleCaja" *ngIf="maestroActual==4 && vision==2 && vistaDetalle==0" >
+                                <div class="p16">
+                                    <div class="valorCentro">{{ registro.capacidad }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[1767] }}</div>    
+                                </div>
+                                <div class="p17">
+                                    <div class="valorCentro">{{ registro.totall }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2275] }}</div>
+                                </div>
+                                <div class="p17">
+                                    <div class="valorCentro">{{ registro.pctproceso + '%' }}</div>    
+                                    <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2286] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="p14" *ngIf="maestroActual==4 && vision==2 && vistaDetalle==0" [style.marginTop.px]="5">
+                                <div class="valorIzquierda">{{ registro.nproceso }}</div>    
+                                <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2267] }}</div>
+                            </div>
+                            
+                            
+                            <div class="registroSub">
+                                <div class="registroAdicional">
+                                      
+                                    <div *ngIf="maestroActual==4 && vision==3 && vistaDetalle==0" >
+
+                                        <div class="dobleCaja">
+                                            <div class="p16">
+                                                <div class="valorCentro">{{ registro.totall }}</div>    
+                                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2288] }}</div>
+                                            </div>
+                                            <div class="p17">
+                                                <div class="valorCentro">{{ registro.en_proceso }}</div>    
+                                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2275] }}</div>
+                                            </div>
+                                            <div class="p17">
+                                                <div class="valorCentro">{{ registro.stock }}</div>    
+                                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2276] }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="dobleCaja" [style.marginTop.px]="5">
+                                            <div class="p16">
+                                                <div class="valorCentro">{{ registro.espera }}</div>    
+                                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2274] }}</div>
+                                            </div>
+                                            <div class="p17">
+                                                <div class="valorCentro">{{ registro.calidad }}</div>    
+                                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2273] }}</div>
+                                            </div>
+                                            <div class="p17">
+                                                <div class="valorCentro">{{ registro.asignados }}</div>    
+                                                <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2287] }}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="p14" *ngIf="maestroActual==4 && vision==4 && vistaDetalle==0" >
+                                        <div class="valorCentro">{{ registro.totall }}</div>    
+                                        <div class="tituloCentro_p">{{ this.servicio.rTraduccion()[2283] }}</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="p14" *ngIf="maestroActual==1" [style.marginTop.px]="5">
+                                <div class="valorIzquierda">{{ registro.nproceso }}</div>    
+                                <div class="tituloIzquierda_p">{{ this.servicio.rTraduccion()[2266] }}</div>
+                            </div> 
+                                                                
+                        </button>
+
+                        <div class="divisorP3" *ngIf="maestroActual==2 || maestroActual==3"></div>
+                        
+                        <div class="botonera" *ngIf="maestroActual==2">
+
+                            <button class="boton regreso2" mat-button (mouseover)="arreHover3[i]=true;" (mouseout)="arreHover3[i]=false;" [ngClass]="{botHover: arreHover3[i]}" (click)="liberar(i)">
+                                <div class="textoAbajo">{{ this.servicio.rTraduccion()[2292] }}</div>
+                            </button>
+
+                            <button class="boton regreso2" mat-button (mouseover)="arreHover4[i]=true;" (mouseout)="arreHover4[i]=false;" [ngClass]="{botHover: arreHover4[i]}" (click)="rechazar(i)">
+                                <div class="textoAbajo">{{ this.servicio.rTraduccion()[2291] }}</div>
+                            </button>
+
+                        </div>
+                        <div class="botonera" *ngIf="maestroActual==3">
+                            <button class="boton regreso2" mat-button (mouseover)="arreHover3[i]=true;" (mouseout)="arreHover3[i]=false;" [ngClass]="{botHover: arreHover3[i]}" (click)="liberar(i)">
+                                <div class="textoAbajo">{{ this.servicio.rTraduccion()[2292] }}</div>
+                            </button>
+
+                            <button class="boton regreso2" mat-button (mouseover)="arreHover4[i]=true;" (mouseout)="arreHover4[i]=false;" [ngClass]="{botHover: arreHover4[i]}" (click)="aInspeccion(i)">
+                                <div class="textoAbajo">{{ this.servicio.rTraduccion()[2290] }}</div>
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="plantilla" @esquema (@esquema.done)="salidaEfecto($event)" [style.color]="colorLetrasBox" [style.backgroundColor]="colorFondo" *ngIf="verRegistro==2">
+            <div class="registroCaja">
+                    <div class="alertaCaja" *ngIf="editando">
+                        <mat-icon class="alertaIcono">warning</mat-icon>
+                        <span class="alertaMensaje" [innerHTML]="faltaMensaje"></span>
+                    </div>
+                    <div class="registroGeneral" *ngIf="maestroActual<4">
+                        <div class="registroCampo" *ngIf="maestroActual==0 && nivelActual==1">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2315] }}</div>
+                            <mat-form-field class="texto">
+                                <mat-select #lstParte3 [(value)]="detalleRegistro.carga" name="carga" (selectionChange)=cambiando($event)>
+                                    <mat-option *ngFor="let cargui of cargas; let i = index" [value]="cargui.id">{{ cargui.carga }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> 
+                        <div class="registroCampo" *ngIf="(maestroActual==0 && nivelActual==1)">
+                            <div class="registroTitulo">{{ titulos[0] }}</div>    
+                            <mat-form-field class="texto">
+                                <mat-select #lstParte [(value)]="detalleRegistro.parte" name="parte" (selectionChange)=cambiando($event)>
+                                    <mat-option *ngFor="let parte of partes; let i = index" [value]="parte.id">{{ parte.nombre }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="ayudaCampo_2" *ngIf="maestroActual==1">{{ this.servicio.rTraduccion()[2295] }}</span>
+                            
+                        </div>
+
+                        <div class="registroCampo" *ngIf="maestroActual == 1">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[1349] }}</div>
+                            <mat-form-field class="texto">
+                                <input matInput #txtT9 [(ngModel)]="detalleRegistro.lote" maxlength="50" autocomplete="off" name="detalleRegistro.lote" #objetivo="ngModel" (input)="cambiando($event);filtrando(1, $event)" [matAutocomplete]="auto0">
+                                <mat-hint [ngClass]="{ pista: !error05, pistaError: error05 }" align="start">{{ this.servicio.rTraduccion()[180] }}</mat-hint>
+                                <mat-hint [ngClass]="{ pista: detalleRegistro.loteID!=-1, pistaError: detalleRegistro.loteID==-1 }" align="end">{{ detalleRegistro.loteID==-1 ? this.servicio.rTraduccion()[3547] : this.servicio.rTraduccion()[3546] }}</mat-hint>
+                            </mat-form-field>  
+                            <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[4343] }}</span>
+
+                            <mat-autocomplete #auto0="matAutocomplete" (optionSelected)="buscarDatos(1, $event);cambiando($event);">
+                                <ng-container>
+                                  <mat-option *ngFor="let lote of lotesF;" [value]="lote.id">{{ lote.nombre }}</mat-option>
+                                </ng-container>
+                            </mat-autocomplete>
+                        </div>
+
+                        <div class="registroCampo" *ngIf="maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ titulos[13] }}</div>    
+                            <div class="registroValor">
+                                <mat-form-field class="cajaTexto_2">
+                                    <input matInput #txtCarga [(ngModel)]="detalleRegistro.carga" maxlength="20" autocomplete="off" name="carga" #carga="ngModel" (input)="cambiando($event)">
+                                    <mat-hint class="pista" align="end">{{ carga.value?.length || 0 }} / 20</mat-hint>
+                                </mat-form-field>                            
+                            </div>    
+                        </div>
+
+                        <div class="registroCampo" *ngIf="maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ titulos[12] }}</div>    
+                            <mat-form-field class="texto">
+                                <mat-select #lstParte2 [(value)]="detalleRegistro.equipo" name="equipo" (selectionChange)=cambiando($event)>
+                                    <mat-option *ngFor="let proceso of procesos; let i = index" [value]="proceso.id">{{ proceso.nombre }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                       
+
+                        <div class="registroCampo" *ngIf="nivelActual!=1">
+                            <div class="registroTitulo">{{ titulos[1] }}</div>
+                            <div class="columnas">
+                                <mat-form-field class="cajaTexto_2" [style.width.%]="45">
+                                    <input #txtFecha matInput [(ngModel)]="detalleRegistro.fecha" [matDatepicker]="picker1" name="detalleRegistro.fecha" autocomplete="off" #fdesde1="ngModel" (input)="cambiando($event);error01=false;" (dateChange)="cambiando($event);error01=false;">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1">
+                                    </mat-datepicker-toggle> 
+                                    <mat-datepicker #picker1></mat-datepicker>   
+                                    <mat-hint [ngClass]="{ pista: !error01 && !error02, pistaError: (error01 || error02) }" align="start">{{ (error01 ? this.servicio.rTraduccion()[1182] : error02 ? this.servicio.rTraduccion()[1156] : this.servicio.rTraduccion()[180]) }}</mat-hint>
+                                </mat-form-field>
+                                <mat-form-field class="cajaTexto_2" [style.marginLeft.%]="2" [style.width.%]="53">
+                                    <input #txtDesde matInput [(ngModel)]="detalleRegistro.hora" type="time" step="60" name="detalleRegistro.hora" autocomplete="off" #desde="ngModel" (input)="cambiando($event)">
+                                </mat-form-field>
+                                                                    
+                            </div>
+                            <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[909] }}</span>
+                        </div>
+
+
+                        <!--<div class="registroCampo" *ngIf="nivelActual!=1">
+                            <div class="registroTitulo">{{ titulos[1] }}</div>    
+                            <div class="columnas">
+                                <mat-form-field class="cajaTexto_2">
+                                    <input #txtFecha matInput [(ngModel)]="detalleRegistro.fecha" [matDatepicker]="picker1" name="fecha" autocomplete="off" #fecha="ngModel" disabled (input)="cambiando($event)">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
+                                    <mat-datepicker #picker1 disabled="false" (selectedChange)="cambiando($event)"></mat-datepicker>   
+                                </mat-form-field>
+                                <mat-form-field class="cajaTexto_2">
+                                    <input matInput type="time" #txtDesde pattern="^([0-1][0-9]|2[0-3]):([0-5][0-9])$" [(ngModel)]="detalleRegistro.hora" maxlength="5" autocomplete="off" name="hora" required #hora="ngModel" (input)="cambiando($event)">
+                                    <mat-hint class="pista" align="start"><strong>{{this.servicio.rTraduccion()[2491] }}</strong></mat-hint>                       
+                                </mat-form-field>     
+                                
+                            </div>    
+                        </div>-->
+
+                        <div class="registroCampo" *ngIf="maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2302] }}</div>
+                            <mat-form-field class="texto">
+                                <mat-select [(value)]="detalleRegistro.alarma" name="alarma" (selectionChange)=cambiando($event)>
+                                    <mat-option value="S">{{ this.servicio.rTraduccion()[2329] }}</mat-option>
+                                    <mat-option value="N">{{ this.servicio.rTraduccion()[2330] }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[2293] }}</span>
+                            
+                        </div>
+
+                        <div class="registroCampo" *ngIf="maestroActual==0 && nivelActual==1">
+                            <div class="registroTitulo">{{ titulos[3] }}</div>    
+                            <div class="registroValor">
+                                <mat-form-field class="cajaTexto_2">
+                                    <input matInput #txtCantidad type="number" [(ngModel)]="detalleRegistro.cantidad" maxlength="8" autocomplete="off" name="cantidad" #cantidad="ngModel" (input)="cambiando($event)">
+                                </mat-form-field>                            
+                            </div>    
+                        </div>
+
+                        <div class="registroCampo" *ngIf="maestroActual==1">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[1719] }}</div>
+                            <mat-form-field class="texto">
+                                <mat-select #lstParte4 [(value)]="detalleRegistro.proceso" name="proceso" (selectionChange)=cambiando($event)>
+                                    <mat-option *ngFor="let cabProceso of cabProcesos; let i = index" [value]="cabProceso.id">{{ cabProceso.nombre }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="registroCampo" *ngIf="maestroActual==1">
+                            <div class="registroTitulo">{{ titulos[3] }}</div>    
+                            <div class="registroValor">
+                                <mat-form-field class="cajaTexto_2">
+                                    <input matInput #txtPrioridad type="number" [(ngModel)]="detalleRegistro.orden" maxlength="2" autocomplete="off" name="orden" #orden="ngModel" (input)="cambiando($event)">
+                                    <mat-hint class="pista" align="start"><strong>{{ this.servicio.rTraduccion()[505] }}</strong></mat-hint>                                            
+                                </mat-form-field>       
+                                
+                            </div>    
+                        </div>
+
+                        <div class="registroCampo" *ngIf="nivelActual!=1">
+                            <div class="registroTitulo">{{ titulos[4] }}</div>    
+                            <div class="registroValor">
+                                <mat-form-field class="cajaTexto_2">
+                                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" #txtNotas [(ngModel)]="detalleRegistro.notas" maxlength="300" autocomplete="off" name="notas" #notasN="ngModel" (input)="cambiando($event)"></textarea>
+                                    <button mat-button *ngIf="detalleRegistro.notas" matSuffix mat-icon-button aria-label="Clear" (click)="detalleRegistro.notas = '';cambiando($event)">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                    <mat-hint class="pista" align="end">{{ notasN.value?.length || 0 }} / 300</mat-hint>
+                                    <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[358] }}</mat-hint>
+                                </mat-form-field>                            
+                            </div>    
+                        </div>     
+                        <div class="registroCampo" *ngIf="maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2318] }}</div>
+                            <mat-form-field class="texto">
+                                <mat-select [(value)]="detalleRegistro.permitir_reprogramacion" name="permitir_reprogramacion" (selectionChange)=cambiando($event)>
+                                    <mat-option value="S">{{ this.servicio.rTraduccion()[352] }}</mat-option>
+                                    <mat-option value="N">{{ this.servicio.rTraduccion()[353] }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[2296] }}</span>
+                            
+                        </div>
+                        <div class="registroCampo">
+                            <div class="registroTitulo">{{ titulos[5] }}</div>    
+                            <mat-form-field class="texto">
+                                <mat-select [(value)]="detalleRegistro.estatus" name="estatus" (selectionChange)=cambiando($event)>
+                                    <mat-option value="A">{{ this.servicio.rTraduccion()[386] }}</mat-option>
+                                    <mat-option value="I">{{ this.servicio.rTraduccion()[387] }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[1728] }}</span>
+                            
+                        </div>
+                        
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0 && maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ titulos[14] }}</div>    
+                            <div class="registroValorDetalleST">{{ (detalleRegistro.fecha_anterior | date:this.servicio.rIdioma().fecha_02) + this.servicio.rTraduccion()[2331] + '(' + detalleRegistro.sumado + ')' }}</div>    
+                        </div>
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0 && maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ titulos[15] }}</div>    
+                            <div class="registroValorDetalleST">{{ (detalleRegistro.reprogramaciones == 0 ? this.servicio.rTraduccion()[2332] : ''+detalleRegistro.reprogramaciones) }}</div>    
+                        </div>
+                        
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0 && maestroActual==0 && nivelActual==0">
+                            <div class="registroTitulo">{{ titulos[16] }}</div>    
+                            <div class="registroValorDetalleST">{{ detalleRegistro.fecha_original | date:this.servicio.rIdioma().fecha_02 }}</div>    
+                        </div>
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0">
+                            <div class="registroTitulo">{{ titulos[6] }}</div>    
+                            <div class="registroValorDetalleST">{{ detalleRegistro.fcambio | date:this.servicio.rIdioma().fecha_05 }}</div>    
+                        </div>
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0">
+                            <div class="registroTitulo">{{ titulos[7] }}</div>    
+                            <div class="registroValorDetalleST">{{ detalleRegistro.ucambio }}</div>    
+                        </div>
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0">
+                            <div class="registroTitulo">{{ titulos[8] }}</div>    
+                            <div class="registroValorDetalleST">{{ detalleRegistro.fcreacion | date:this.servicio.rIdioma().fecha_05 }}</div>    
+                        </div>
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0">
+                            <div class="registroTitulo">{{ titulos[9] }}</div>    
+                            <div class="registroValorDetalleST">{{ detalleRegistro.ucreacion }}</div>    
+                        </div>
+                            
+                        <div class="registroCampoST" *ngIf="detalleRegistro.id > 0">
+                            <div class="registroTitulo">{{ titulos[10] }}</div>    
+                            <div class="registroValorDetalleST">{{ detalleRegistro.id }}</div>    
+                        </div> 
+                         
+                    </div>
+                    
+                    <div class="registroGeneral" *ngIf="maestroActual==4">
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[1349] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.numero }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2100] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.referencia }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2306] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.producto }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2309] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.inicia | date:this.servicio.rIdioma().fecha_02 }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2312] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.estimada | date:this.servicio.rIdioma().fecha_02 }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2313] }}</div>
+                            <div class="registroValorDetalleST" *ngIf="detalleRegistro.finaliza">{{ detalleRegistro.finaliza | date:this.servicio.rIdioma().fecha_02 }}</div>    
+                            <div class="registroValorDetalleST" *ngIf="!detalleRegistro.finaliza">{{ this.servicio.rTraduccion()[8] }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2131] }}</div>
+                            <div class="registroValorDetalleST">{{ (detalleRegistro.prioridad == 10000 ? this.servicio.rTraduccion()[8] : detalleRegistro.prioridad) }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2320] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.nproceso }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2307] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.nequipo }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2265] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.nruta_detalle }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2323] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.ruta_secuencia }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2308] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.estado }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2325] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.inspecciones }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2304] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.insp_causa }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2328] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.insp_por }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2310] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.inspeccion | date: this.servicio.rIdioma().fecha_02 }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2326] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.rechazos }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2305] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.recha_causa }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2327] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.recha_por }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2311] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.rechazo | date: this.servicio.rIdioma().fecha_02 }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2303] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.carga }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2324] }}</div>
+                            <div class="registroValorDetalleST">{{ detalleRegistro.alarmas }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2301] }}</div>
+                            <div class="registroValorDetalleST">{{ (detalleRegistro.alarma_tse == 'S' ? this.servicio.rTraduccion()[352] : this.servicio.rTraduccion()[353]) }}</div>    
+                        </div>
+                        <div class="registroCampoST">
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2300] }}</div>
+                            <div class="registroValorDetalleST">{{ (detalleRegistro.alarma_tpe == 'S' ? this.servicio.rTraduccion()[352] : this.servicio.rTraduccion()[353]) }}</div>    
+                        </div>
+                        <div class="tablaLotes" >
+                            <div class="registroTitulo">{{ this.servicio.rTraduccion()[2314] }}</div>
+                            <div class="ayudaCampo_2" *ngIf="historicos.length==0">{{ this.servicio.rTraduccion()[2294] }}</div>
+                            <button class="boton regreso9" mat-button (mouseover)="genSec=true;" (mouseout)="genSec=false;" [ngClass]="{botHover: genSec}" (click)="genSecuencia()" *ngIf="historicos.length==0">
+                                <mat-icon class="iconPB_2" svgIcon="i_agregar"></mat-icon>
+                                <div class="texto">Generar secuencia</div> 
+                            </button>
+                            
+                            <div class="ayudaCampo_2" *ngIf="historicos.length>0">{{ cadHistorico }}</div>
+                            <div class="cabeceraTabla" *ngIf="historicos.length>0">
+                                <div class="col01">{{ this.servicio.rTraduccion()[2338] }}</div>
+                                <div class="col02">{{ this.servicio.rTraduccion()[705] }}</div>
+                                <div class="col03">{{ this.servicio.rTraduccion()[2337] }}</div>
+                                <div class="col03">{{ this.servicio.rTraduccion()[2276] }}</div>
+                                <div class="col03">{{ this.servicio.rTraduccion()[2275] }}</div>
+                                <div class="col02">{{ this.servicio.rTraduccion()[568] }}</div>
+                                <div class="col03">{{ this.servicio.rTraduccion()[2335] }}</div>
+                                <div class="col03">{{ this.servicio.rTraduccion()[2336] }}</div>
+                                <div class="col04">{{ this.servicio.rTraduccion()[2334] }}</div>
+                            </div>
+                            <div class="tablaItems" *ngIf="historicos.length>0">    
+                                <button class="boton_2 regreso6" *ngFor="let historico of historicos; let i = index" (click)="editarEquipo(equipo.id)" (mouseover)="arreHover3[i]=true;" (mouseout)="arreHover3[i]=false;" [ngClass]="{ botHover: arreHover3[i] }">
+                                    <div class="tablaDet_2">
+                                        <div class="col01">{{ historico.secuencia }}</div>
+                                        <div class="col02">{{ historico.nruta_detalle }}</div>
+                                        <div class="col03">{{ historico.fecha_entrada | date: this.servicio.rIdioma().fecha_02 }}</div>
+                                        <div class="col03" *ngIf="historico.fecha_stock">{{ historico.fecha_stock | date:this.servicio.rIdioma().fecha_03 }}</div>
+                                        <div class="col03" *ngIf="!historico.fecha_stock && historico.pasado>0">{{ this.servicio.rTraduccion()[8] }}</div>
+                                        <div class="col03" *ngIf="historico.fecha_proceso">{{ historico.fecha_proceso | date:this.servicio.rIdioma().fecha_03 }}</div>
+                                        <div class="col03" *ngIf="!historico.fecha_proceso && historico.pasado>0">{{ this.servicio.rTraduccion()[8] }}</div>
+                                        <div class="col02" *ngIf="historico.pasado>0">{{ historico.nequipo }}</div>
+                                        <div class="col03">{{ historico.fecha_estimada | date:this.servicio.rIdioma().fecha_03 }}</div>
+                                        <div class="col03" *ngIf="historico.fecha_salida">{{ historico.fecha_salida | date: this.servicio.rIdioma().fecha_03}}</div>
+                                        <div class="col03" *ngIf="i==actual && !historico.fecha_salida">{{ this.servicio.rTraduccion()[2333] }}</div>
+                                        <div class="col04">{{ (historico.tiempoSEC == '00:00:00' ? '-:--:--' : historico.tiempoSEC) }}</div>                                        
+                                    </div> 
+                                </button> 
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="subir" *ngIf="verIrArriba" @arriba>
+                <button class="subirBoton" mat-flat-button (click)="irArriba()" [matTooltip]="irArribaTT" matTooltipClass = "toolTip2">
+                    <mat-icon class="subirIcono">keyboard_arrow_up</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div> 

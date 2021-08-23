@@ -1,0 +1,46 @@
+<div class="contenido" class="mat-typography">
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_lotes"></mat-icon>
+        <span class="titulo">{{ this.servicio.rTraduccion()[330] }}</span>
+    </div>
+    <div class="registroCampo">     
+        <div class="registroTitulo">{{ this.servicio.rTraduccion()[331] }}</div>    
+        <div class="registroValor">
+            <mat-form-field class="texto">
+                <input matInput #txtT1 [(ngModel)]="reporte" maxlength="40" autocomplete="off" name="reporte"  #reporte1 ="ngModel" (keydown.enter)="buscarReporte()" (input)="iniReporte()">
+                <button mat-button *ngIf="reporte" matSuffix mat-icon-button aria-label="Clear" (click)="reporte = '';iniReporte()">
+                    <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                </button>
+                <mat-hint [ngClass]="{ pista: detalle.estatus!='I', pistaError: detalle.estatus=='I' }" align="start">{{ detalle.estatus=='A' ? this.servicio.rTraduccion()[336] : detalle.estatus=='I' ? this.servicio.rTraduccion()[335] : this.servicio.rTraduccion()[337] }}</mat-hint>
+            </mat-form-field>     
+        </div>    
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.referencia == '-' ? '-' : detalle.referencia }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[324] }}</div>    
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.nombre }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[332] }}</div>    
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.nproceso }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[333] }}</div>    
+    </div>
+    <div class="registroCampoST">
+        <div class="registroTituloST">{{ detalle.ruta_secuencia }}</div>    
+        <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[334] }}</div>    
+    </div>
+    <div class="pie" mat-dialog-actions>
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)" [disabled]="!encontrado"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon [ngClass]="{ iconPB_3: encontrado, iconPB_3_disabled: !encontrado }" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ tituloBoton }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[177] }}</span>
+        </button>
+    </div>
+</div>
+    

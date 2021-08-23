@@ -1,0 +1,273 @@
+<div class="contenido" class="mat-typography">
+    
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_situaciones"></mat-icon>
+        <span class="titulo">{{ this.servicio.rTraduccion()[202] }}</span>
+    </div>
+    <div class="registroCampo">     
+        <div class="registroTitulo2">{{ this.servicio.rTraduccion()[201] }}</div>    
+        <div class="registroValor">
+            <mat-form-field class="texto">
+                <input matInput #txtT1 [(ngModel)]="reporte" maxlength="20" type="number" autocomplete="off" name="reporte"  #reporte1 ="ngModel" (keydown.enter)="buscarReporte()" (input)="iniReporte()">
+                <button mat-button *ngIf="reporte" matSuffix mat-icon-button aria-label="Clear" (click)="reporte = '';iniReporte()">
+                    <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                </button>
+            </mat-form-field>     
+        </div>    
+    </div>
+    <div class="cajaLista">
+        <div mat-dialog-conten class ="lista">
+    
+        <div class="dobleColumna">
+            <div class="registroCampoST">
+                <div class="registroTituloST">{{ detalle.fecha_reporte == '-' ? '-' : detalle.fecha_reporte | date:this.servicio.rIdioma().fecha_07 }}</div>    
+                <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[173] }}</div>    
+            </div>
+            <div class="registroCampoST" [style.marginLeft.px]="5">
+                <div class="registroTituloST">{{ detalle.nestatus }}</div>    
+                <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[171] }}</div>    
+            </div>
+        </div>
+        <div class="registroCampoST">
+            <div class="registroTituloST">{{ detalle.nmaquina }}</div>    
+            <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[172] }}</div>    
+        </div>
+        <div class="registroCampoST">
+            <div class="registroTituloST">{{ detalle.nfalla }}</div>    
+            <div class="registroValorDetalleST">{{ this.servicio.rTraduccion()[174] }}</div>    
+        </div>
+
+
+        <div class="grupoTitulo">{{ this.servicio.rTraduccion()[203] }}</div>    
+        <div class="grupoCampos">
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[204] }}</div>    
+                <div class="registroValor" >
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.p1" maxlength="300" autocomplete="off" name="causaraiz.p1" #p1="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.p1" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.p1 = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ p1.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[205] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[206] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.p2" maxlength="300" autocomplete="off" name="causaraiz.p2" #p2="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.p2" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.p2 = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ p2.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[207] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[208] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.p3" maxlength="300" autocomplete="off" name="causaraiz.p3" #p3="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.p3" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.p3 = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ p3.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[209] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[210] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.p4" maxlength="300" autocomplete="off" name="causaraiz.p4" #p4="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.p4" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.p4 = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ p4.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[211] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[212] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.p5" maxlength="300" autocomplete="off" name="causaraiz.p5" #p5="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.p5" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.p5 = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ p5.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[213] }}</span>       
+            </div>
+            
+            
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[214] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.plan" maxlength="300" autocomplete="off" name="causaraiz.plan" #plan="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.plan" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.plan = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ plan.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[215] }}</span>       
+            </div>
+
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[216] }}</div>    
+                <mat-form-field class="cajaTexto_2">
+                    <input matInput [(ngModel)]="causaraiz.fecha" maxlength="100" autocomplete="off" name="causaraiz.fecha"  #fecha ="ngModel">
+                    <button mat-button *ngIf="causaraiz.fecha" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.fecha = '';">
+                        <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                    </button>
+                    <mat-hint class="pista" align="end">{{ fecha.value?.length || 0 }} / 100</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[217] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[218] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.responsable" maxlength="300" autocomplete="off" name="causaraiz.responsable" #responsable="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.responsable" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.responsable = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ responsable.value?.length || 0 }} / 300</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[219] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[220] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.departamento" maxlength="300" autocomplete="off" name="causaraiz." #departamento="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.departamento" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.departamento = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ departamento.value?.length || 0 }} / 300</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[221] }}</span>       
+            </div>
+        </div>
+
+        <div class="grupoTitulo">{{ this.servicio.rTraduccion()[222] }}</div>    
+        <div class="grupoCampos">
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[223] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.mano_de_obra" maxlength="500" autocomplete="off" name="causaraiz.mano_de_obra" #mano_de_obra="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.mano_de_obra" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.mano_de_obra = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ mano_de_obra.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[224] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[225] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.maquina" maxlength="500" autocomplete="off" name="causaraiz.maquina" #maquina="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.maquina" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.maquina = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ maquina.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[226] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[227] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.medio_ambiente" maxlength="500" autocomplete="off" name="causaraiz.medio_ambiente" #medio_ambiente="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.medio_ambiente" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.medio_ambiente = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ medio_ambiente.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[228] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[229] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.metodo" maxlength="500" autocomplete="off" name="causaraiz.metodo" #metodo="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.metodo" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.metodo = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ metodo.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[230] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[231] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.material" maxlength="500" autocomplete="off" name="causaraiz.material" #material="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.material" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.material = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ material.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[232] }}</span>       
+            </div>
+
+            <div class="registroCampo" >
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[233] }}</div>    
+                <div class="registroValor">
+                    <mat-form-field class="cajaTexto_2">
+                        <textarea matInput #txtNotas cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"  [(ngModel)]="causaraiz.comentarios" maxlength="500" autocomplete="off" name="causaraiz.comentarios" #comentarios="ngModel"></textarea>
+                        <button mat-button *ngIf="causaraiz.comentarios" matSuffix mat-icon-button aria-label="Clear" (click)="causaraiz.comentarios = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-hint class="pista" align="end">{{ comentarios.value?.length || 0 }} / 500</mat-hint>
+                    </mat-form-field>                            
+                </div>
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[234] }}</span>       
+            </div>
+
+            
+        </div>
+        </div>
+    </div>
+
+
+    <div class="pie" mat-dialog-actions>
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)" [disabled]="!encontrado"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon [ngClass]="{ iconPB_3: encontrado, iconPB_3_disabled: !encontrado }" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[235] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)"  [ngStyle]="{ 'font-size': movil ? '11px' : '17px' }">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[177] }}</span>
+        </button>
+    </div>
+</div>
+    

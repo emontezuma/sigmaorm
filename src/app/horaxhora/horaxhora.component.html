@@ -1,0 +1,175 @@
+<div class="contenido" class="mat-typography">
+    
+    <div class="cabecera" mat-dialog-title>
+        <mat-icon class="iconoBarras iconPB_2" svgIcon="i_reloj"></mat-icon>
+        <span class="titulo">{{ this.servicio.rTraduccion()[3647] }}</span>
+    </div>  
+    <div class="cajaLista">
+        <div mat-dialog-conten class ="lista">
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3649] }}</div>
+                <mat-form-field class="cajaTexto_2">
+                    <input #txtT1 matInput [(ngModel)]="datos.fecha" [matDatepicker]="picker1" name="datos.fecha" autocomplete="off" #fecha="ngModel" [disabled]="datos.editando">
+                    <mat-datepicker-toggle matSuffix [for]="picker1">
+                    </mat-datepicker-toggle> 
+                    <mat-datepicker #picker1></mat-datepicker>   
+                    <mat-hint *ngIf="error01" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3678] }}</mat-hint>
+                    <mat-hint *ngIf="error07" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3685] }}</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3648] }}</div>
+                <mat-form-field class="cajaTexto_2">
+                    <mat-select [(value)]="datos.hora" name="datos.hora" [disabled]="datos.editando">
+                        <mat-option value="0">{{ this.servicio.rTraduccion()[3650] }}</mat-option>
+                        <mat-option value="1">{{ this.servicio.rTraduccion()[3651] }}</mat-option>
+                        <mat-option value="2">{{ this.servicio.rTraduccion()[3652] }}</mat-option>
+                        <mat-option value="3">{{ this.servicio.rTraduccion()[3653] }}</mat-option>
+                        <mat-option value="4">{{ this.servicio.rTraduccion()[3654] }}</mat-option>
+                        <mat-option value="5">{{ this.servicio.rTraduccion()[3655] }}</mat-option>
+                        <mat-option value="6">{{ this.servicio.rTraduccion()[3656] }}</mat-option>
+                        <mat-option value="7">{{ this.servicio.rTraduccion()[3657] }}</mat-option>
+                        <mat-option value="8">{{ this.servicio.rTraduccion()[3658] }}</mat-option>
+                        <mat-option value="9">{{ this.servicio.rTraduccion()[3659] }}</mat-option>
+                        <mat-option value="10">{{ this.servicio.rTraduccion()[3660] }}</mat-option>
+                        <mat-option value="11">{{ this.servicio.rTraduccion()[3661] }}</mat-option>
+                        <mat-option value="12">{{ this.servicio.rTraduccion()[3662] }}</mat-option>
+                        <mat-option value="13">{{ this.servicio.rTraduccion()[3663] }}</mat-option>
+                        <mat-option value="14">{{ this.servicio.rTraduccion()[3664] }}</mat-option>
+                        <mat-option value="15">{{ this.servicio.rTraduccion()[3665] }}</mat-option>
+                        <mat-option value="16">{{ this.servicio.rTraduccion()[3666] }}</mat-option>
+                        <mat-option value="17">{{ this.servicio.rTraduccion()[3667] }}</mat-option>
+                        <mat-option value="18">{{ this.servicio.rTraduccion()[3668] }}</mat-option>
+                        <mat-option value="19">{{ this.servicio.rTraduccion()[3669] }}</mat-option>
+                        <mat-option value="20">{{ this.servicio.rTraduccion()[3670] }}</mat-option>
+                        <mat-option value="21">{{ this.servicio.rTraduccion()[3671] }}</mat-option>
+                        <mat-option value="22">{{ this.servicio.rTraduccion()[3672] }}</mat-option>
+                        <mat-option value="23">{{ this.servicio.rTraduccion()[3673] }}</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="error08" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3684] }}</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="registroCampo" *ngIf="!datos.editando">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3737] }}</div>
+                <mat-form-field class="cajaTexto_2">
+                    <input matInput #txtT2 type="number" [(ngModel)]="datos.piezas" maxlength="15"  autocomplete="off" name="datos.piezas" #piezas="ngModel" [disabled]="datos.editando">
+                </mat-form-field>
+                <mat-hint *ngIf="error02" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3679] }}</mat-hint>
+                <mat-hint *ngIf="error06" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3683] }}</mat-hint>
+            </div>
+            <div class="registroCampo" *ngIf="datos.editando">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3716] }}</div>
+                <div class="columnas">
+                    <mat-form-field class="cajaTexto_2" [style.fontSize.px]="22" [style.textAlign]="'center'" [style.marginTop.px]="-20" [style.width.%]="33">
+                        <input matInput #txtT2 type="number" [(ngModel)]="datos.piezas" maxlength="15"  autocomplete="off" name="datos.piezas" #piezas="ngModel" disabled>
+                        <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[2076] }}</mat-hint> 
+                    </mat-form-field>
+                    <mat-form-field class="cajaTexto_2" [style.fontSize.px]="22" [style.textAlign]="'center'" [style.marginTop.px]="-20" [style.marginLeft.%]="1" [style.width.%]="32">
+                        <input matInput #txtT2 type="number" [(ngModel)]="datos.produccion" maxlength="15"  autocomplete="off" name="datos.produccion" #piezas="ngModel" disabled>
+                        <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[3690] }}</mat-hint> 
+                    </mat-form-field>
+                    <mat-form-field class="cajaTexto_2" [style.fontSize.px]="22" [style.textAlign]="'center'" [style.marginTop.px]="-20" [style.marginLeft.%]="1" [style.width.%]="32">
+                        <input matInput #txtT2 type="number" [(ngModel)]="datos.malas" maxlength="15"  autocomplete="off" name="datos.malas" #piezas="ngModel" disabled>
+                        <mat-hint class="pista" align="start">{{ this.servicio.rTraduccion()[3691] }}</mat-hint>
+                    </mat-form-field>
+                     
+                </div>
+            </div>
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3642] }}</div>
+                <mat-form-field class="cajaTexto_2">
+                    <input matInput #txtT3 type="number" [(ngModel)]="datos.disponible" maxlength="4"  autocomplete="off" name="datos.disponible" #disponible="ngModel" [disabled]="datos.editando">
+                    <span class="gris" matSuffix>{{ calcularHR(datos.disponible) }}</span>
+                    <mat-hint *ngIf="!error03 && !error04" class="pista" align="start">0-3600</mat-hint>
+                    <mat-hint *ngIf="error03" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3680] }}</mat-hint> 
+                    <mat-hint *ngIf="error04" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3682] }}</mat-hint>                
+                    <mat-hint class="pista" align="end">{{ this.servicio.rTraduccion()[350] }}</mat-hint>
+                </mat-form-field>  
+            </div>
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3643] }}</div>
+                <mat-form-field class="cajaTexto_2">
+                    <input matInput #txtT4 type="number" [(ngModel)]="datos.paro" maxlength="4"  autocomplete="off" name="datos.paro" #paro="ngModel" [disabled]="datos.editando">
+                    <span class="gris" matSuffix>{{ calcularHR(datos.paro) }}</span>
+                    <mat-hint *ngIf="!error05" class="pista" align="start">0-3600</mat-hint>
+                    <mat-hint *ngIf="error05" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3681] }}</mat-hint> 
+                    <mat-hint class="pista" align="end">{{ this.servicio.rTraduccion()[350] }}</mat-hint>
+                </mat-form-field>  
+            </div>
+
+            <div class="registroCampo">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[233] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="3" [(ngModel)]="datos.comentarios" maxlength="300" autocomplete="off" name="datos.comentarios" #comentarios="ngModel"></textarea>
+                    <button mat-button *ngIf="datos.comentarios" matSuffix mat-icon-button aria-label="Clear" (click)="datos.comentarios = ''">
+                        <mat-icon class="iconPB" svgIcon="in_cerrar"></mat-icon>
+                    </button>
+                    <mat-hint class="pista" align="end">{{ comentarios.value?.length || 0 }} / 300</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3709] }}</span>       
+            </div>
+
+            <div class="registroCampo" *ngIf="datos.editando">
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3749] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <input matInput #txtT4 type="number" [(ngModel)]="datos.scrap" maxlength="25"  autocomplete="off" name="datos.scrap" #scrap="ngModel">
+                    <mat-hint *ngIf="error09" class="pistaError" align="start">{{ this.servicio.rTraduccion()[3760] }}</mat-hint>
+                    <mat-hint class="pista" align="end">{{ this.servicio.rTraduccion()[184] }}</mat-hint>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3750] }}</span>       
+            </div>
+
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3710] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.causa" name="datos.causa">
+                        <mat-option *ngFor="let causa of causas; let i = index" [value]="causa.id">{{ causa.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3714] }}</span>       
+            </div>
+
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3711] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.responsable" name="datos.responsable">
+                        <mat-option *ngFor="let responsable of responsables; let i = index" [value]="responsable.id">{{ responsable.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3713] }}</span>       
+            </div>
+
+            <div class="registroCampo"> 
+                <div class="registroTitulo">{{ this.servicio.rTraduccion()[3712] }}</div>    
+                <mat-form-field class="cajaTexto">
+                    <mat-select [(ngModel)]="datos.responsable2" name="datos.responsable2">
+                        <mat-option *ngFor="let responsable of responsables; let i = index" [value]="responsable.id">{{ responsable.nombre }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                            
+                <span class="ayudaCampo_2">{{ this.servicio.rTraduccion()[3713] }}</span>       
+            </div>
+        </div>
+
+    </div>
+    <div class="pie" mat-dialog-actions>
+        <button class="positivo indice" mat-button (mouseover)="validar01=true;" (mouseout)="validar01=false;" [ngClass]="{ botHover: validar01 }" (click)="validar(1)">
+            <mat-icon class="iconPB_3" svgIcon="in_seleccionado"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[551] }}</span>
+        </button>
+
+        <button class="boton indice" mat-button (mouseover)="validar02=true;" (mouseout)="validar02=false;" [ngClass]="{ botHover: validar02 }" (click)="validar(2)">
+            <mat-icon class="iconPB" svgIcon="i_cancelar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[77] }}</span>
+        </button>
+
+        <button class="boton indice negativo" mat-button (mouseover)="validar03=true;" (mouseout)="validar03=false;" [ngClass]="{ botHover: validar03 }" (click)="validar(3)" *ngIf="datos.id>0 && !datos.editando">
+            <mat-icon class="iconPB" svgIcon="i_eliminar"></mat-icon>
+            <span class="botTexto">{{ this.servicio.rTraduccion()[388] }}</span>
+        </button>
+
+    </div>
+</div>
+    
