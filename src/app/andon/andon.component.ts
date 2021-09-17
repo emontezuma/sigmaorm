@@ -2466,7 +2466,7 @@ export class AndonComponent implements OnInit {
       this.servicio.mensajeToast.emit(mensajeCompleto);
       return
     }
-    this.detalle.contabilizar = this.configuracion.permitir_afectacion != "S" ? "S" : !this.detalle.contabilizar ? "S" : !this.detalle.contabilizar;
+    this.detalle.contabilizar = this.configuracion.permitir_afectacion != "S" ? "S" : !this.detalle.contabilizar ? "S" : this.detalle.contabilizar;
     let adicional = "";
     if (this.servicio.rVersion().modulos[2] == 1)
     {

@@ -419,7 +419,6 @@ export class ServicioService {
             return resp;
           }))
     }
-
     else if (campos.accion == 150)
     {
       let losCampos= JSON.stringify(campos);
@@ -743,7 +742,7 @@ export class ServicioService {
         console.log(sentencia);
         
         let camposMSG = {accion: 200, sentencia: sentencia};  
-        this.llamadaMMCall(camposMSG).subscribe( resp =>
+        this.consultasBD(camposMSG).subscribe( resp =>
         {
           console.log(resp);
         })

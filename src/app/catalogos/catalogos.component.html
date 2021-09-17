@@ -324,7 +324,7 @@
                             </div>
                         </div>
                         <div class="doble_s" *ngIf="miSeleccion==9">                        
-                            <div class="valor">{{ this.servicio.rTraduccion()[602] + registro.inicia + this.servicio.rTraduccion()[610] + registro.termina }}</div>
+                            <div class="valor">{{ this.servicio.rTraduccion()[602] + (registro.inicia && registro.inicia.substring(0, 8)) + this.servicio.rTraduccion()[610] + (registro.termina  && registro.termina.substring(0, 8)) }}</div>
                             <div class="titulo">Horario</div>
                         </div>
                         
@@ -3182,7 +3182,7 @@
                             <div class="registroCampo" [ngStyle]="{'color': detalle.admin == 'N' ? 'var(--texto_boton)' : 'var(--texto_boton_inactivo)', 'border-color': detalle.admin == 'N' ? 'var(--borde_tarjeta)' : 'var(--texto_boton_inactivo)'}">
                                 <div class="registroTitulo">{{ this.servicio.rTraduccion()[693] }}</div>
                                 <mat-form-field class="texto">
-                                    <mat-select [(ngModel)]="opciones" (selectionChange)="seleccion(4, $event);cambiando($event)" [disabled]="detalle.admin=='S'">
+                                    <mat-select [(ngModel)]="selListadoH" (selectionChange)="seleccion(4, $event);cambiando($event)" [disabled]="detalle.admin=='S'">
                                         <mat-option value="S">{{ this.servicio.rTraduccion()[980] }}</mat-option>
                                         <mat-option value="1">{{ this.servicio.rTraduccion()[1064] }}</mat-option>
                                         <mat-option value="0">{{ this.servicio.rTraduccion()[999] }}</mat-option>

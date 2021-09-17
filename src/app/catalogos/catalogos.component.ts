@@ -2103,6 +2103,11 @@ export class CatalogosComponent implements OnInit {
           this.detalle.ftq = resp[0].ftq * 1;
           this.detalle.dis = resp[0].dis * 1;
         }
+        else if (this.miSeleccion==6)
+        {
+          this.detalle.hora_desde = resp[0].hora_desde.substring(0, 8);
+          this.detalle.hora_hasta = resp[0].hora_hasta.substring(0, 8);
+        }
         else if (this.miSeleccion==25)
         {
           this.detalle.kanban_tiempo_estimado = resp[0].kanban_tiempo_estimado * 1;
@@ -2203,6 +2208,8 @@ export class CatalogosComponent implements OnInit {
         else if (this.miSeleccion == 9) 
         {
           this.detalle.usuario = resp[0].usuario ? resp[0].usuario : 0;
+          this.detalle.inicia = resp[0].inicia.substring(0, 8);
+          this.detalle.termina = resp[0].termina.substring(0, 8);
         }
         this.mostrarImagenRegistro = "S"
         this.mensajeImagen = this.servicio.rTraduccion()[358]
@@ -3927,6 +3934,10 @@ llenarVariablesCL(id: number)
         else if (this.error03 && this.miSeleccion==30)
         {
           this.lstC2.focus();
+        }
+        else if (this.error05 && this.miSeleccion==7)
+        {
+          this.listaListad.focus();
         }
         else if ((this.error04 || this.error05) && this.miSeleccion==30)
         {
@@ -8113,7 +8124,7 @@ cambiando(evento: any)
             this.listados[i].seleccionado = event.value;
           }
           setTimeout(() => {
-            this.selListadoT = "N";  
+            this.selListadoT = "S";  
           }, 300);
         }
          else if (tipo == 12)
