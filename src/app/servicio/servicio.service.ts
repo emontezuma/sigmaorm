@@ -405,7 +405,7 @@ export class ServicioService {
       )
       .pipe(
         map( resp => 
-          { 
+          {   
             //console.log(losCampos);
             if (resp.length > 0) {
               if (resp[0].errorConsulta) {

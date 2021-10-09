@@ -218,7 +218,7 @@ idiomas: any = [];
 primerNombre: string = "";"sigma"
 
 estado: string = "";  
-version: string = "SIGMA v1.70 28-Jul-2021"
+version: string = "SIGMA v1.70 20-Sep-2021"
 verBarra: boolean = false;
 verPie: boolean = true;
 iconoHamburguesa: string = "i_menu";
